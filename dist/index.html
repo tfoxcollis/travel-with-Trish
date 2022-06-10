@@ -4,12 +4,36 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webpack Starter Kit</title>
+  <title>Travel with Trish</title>
 </head>
 <body>
-  <img src="./images/turing-logo.png" alt="turing logo">
-  
-  <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
+  <header>
+    <section class="welcome">
+      <h1>Welcome, User</h1>
+    </section>
+    <ul class="navbar">
+      <li><button type="submit">Search</button></li>
+      <li><button type="submit">Current</button></li>
+      <li><button type="submit">Upcoming</button></li>
+      <li><button type="submit">Past</button></li>
+      <li><button type="submit">Pending</button></li>
+    </ul>
+  </header>
+  <main class="main-box">
+    <section class="user-form">
+      <form action="" method="get">
+        <label for="date">Date</label>
+        <input type="date" name="date" id="">
+        <label for="duration">Duration</label>
+        <input type="number" name="duration" id="">
+        <label for="number of travelers">Number of Travelrs</label>
+        <input type="number" name="number of travelers" id="">
+        <label for="Destination">Destination</label>
+        <select name="Destination" id="">Destination</select>
+        <input type="submit" value="search">
+      </form>
+    </section>
+  </main> 
   <script src="bundle.js"></script>
 
 </body>
