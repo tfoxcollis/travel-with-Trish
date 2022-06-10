@@ -1,6 +1,7 @@
 import { getData, postData } from "./apiCalls.js";
 
-import {TravelerRepo} from "./repositories/travelerRepo";
+import {TravelerRepo} from "./repositories/travelerRepo.js";
+import {Traveler} from "./traveler.js"
 
 import './css/styles.css';
 
