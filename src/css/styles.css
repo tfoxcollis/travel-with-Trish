@@ -1,3 +1,50 @@
 body {
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+  height: 100vh;
+  /* background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%); */
+}
+
+header {
+  border: solid 1px black;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.welcome {
+  font-size: 30px;
+  text-align: center;
+}
+
+ul.navbar {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 5px;
+}
+
+ul.navbar li {
+  color: black;
+  font-size: 2em;
+  list-style-type: none;
+  margin-left: 30px;
+
+}
+
+.main-box {
+  border: solid 2px red;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.user-form {
+  border: solid 2px black;
+  height: 30%;
+  width: 70%;
+  padding: 50px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: center;
 }
