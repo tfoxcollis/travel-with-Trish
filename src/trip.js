@@ -10,7 +10,39 @@ class Trip {
     this.suggestedActivities = tripData.suggestedActivities;
   }
 
-  
+  startDate() {
+    return new Date(this.date);
+  }
+
+  endDate() {
+    let endDate = this.startDate();
+    endDate.setDate(this.startDate().getDate() + this.duration)
+    return endDate
+  }
+
+  pastTrip(currentDate) {
+    let today = new Date(currentDate);
+    if(today > this.endDate()) {
+      return true;
+    }
+    return false
+  }
+
+  currentTrip(currentDate) {
+    let today = new Date(currentDate);
+    if(today >= this.startDate() && today <= this.endDate()) {
+      return true 
+    }
+    return false
+  }
+
+  futureTrip(currentDate) {
+    let today = new Date(currentDate);
+    if(today < this.startDate()) {
+      return true;
+    }
+    return false
+  }
 }
 
 export default Trip;

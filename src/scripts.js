@@ -4,18 +4,18 @@ import TravelerRepo from "./repositories/travelerRepo";
 import Traveler from "../src/traveler";
 import TripRepo from "./repositories/tripRepo.js";
 import Trip from "./trip.js";
-import destinationRepo from "./repositories/destinationRepo.js";
+import DestinationRepo from "./repositories/destinationRepo.js";
 import Destination from "./destination.js";
 
 import './css/styles.css';
 import './images/turing-logo.png'
-import DestinationRepo from "./repositories/destinationRepo.js";
 
 // Global Variables
 let travelerRepo;
 let tripRepo;
 let destinationRepo;
 let currentTraveler;
+let paidVacations;
 
 //functions
 
@@ -37,14 +37,11 @@ const fetchUserData = () => {
     let destinations = data[2].destinations.map((destination) => {
       return new Destination(destination);
     });
-    debugger
     travelerRepo = new TravelerRepo(travelers);
     tripRepo = new TripRepo(trips);
     destinationRepo = new DestinationRepo(destinations);
-
-    currentTraveler = travelerRepo.data[49];
-
-
+    currentTraveler = travelerRepo.data[36];
+    paidVacations = tripRepo.getYearTotal(currentTraveler.id, destinationRepo.data)
   }).catch((error) =>
   console.log(error, "Error is coming back from the server")
   );
