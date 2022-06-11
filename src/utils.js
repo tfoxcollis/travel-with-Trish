@@ -12,9 +12,8 @@ const getTodaysDate = () => {
   return yyyy + '/' + mm + '/' + dd;
 }
 
-const calculateTripCost = (trip, destination) => {
-  let total = (trip.travelers * destination.flightCostPerPerson) +
-    (trip.duration * destination.lodgingPerDay)
+const calculateTripCost = (trip) => {
+  let total = trip.getTicketPrices() + trip.getLodgingPrice();
   
   total += (total * .10)
   return total

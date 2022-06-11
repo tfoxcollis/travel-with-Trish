@@ -1,13 +1,22 @@
 class Trip {
-  constructor(tripData) {
+  constructor(tripData, destination) {
     this.id = tripData.id;
     this.userID = tripData.userID;
     this.destinationID = tripData.destinationID;
+    this.destination = destination;
     this.travelers = tripData.travelers;
     this.date = tripData.date;
     this.duration = tripData.duration;
     this.status = tripData.status;
     this.suggestedActivities = tripData.suggestedActivities;
+  }
+
+  getTicketPrices() {
+    return this.travelers * this.destination.flightCostPerPerson
+  }
+
+  getLodgingPrice() {
+    return this.duration * this.destination.lodgingPerDay
   }
 
   startDate() {

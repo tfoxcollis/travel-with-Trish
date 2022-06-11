@@ -41,14 +41,11 @@ class TripRepo {
     return this.filterByYear(pastAndCurrentTrips, date);
   }
 
-  getYearTotal(travelerId, destinationsArr) {
+  getYearTotal(travelerId) {
     let date = getTodaysDate();
     let paidTrips = this.getPaidTrips(travelerId, date);
     let totalExpenses = paidTrips.reduce((acc, trip) => {
-      let destination = destinationsArr.find((destination) => {
-        return destination.id == trip.destinationID
-      })
-      acc += calculateTripCost(trip, destination)
+      acc += calculateTripCost(trip)
       return acc;
     }, 0);
     return totalExpenses;
