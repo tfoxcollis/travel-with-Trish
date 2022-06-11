@@ -5,16 +5,16 @@ class TripRepo {
     this.data = tripData;
   }
 
-  filterPastTrips() {
-    return this.data.filter(trip => trip.pastTrip(getTodaysDate()))
+  filterPastTrips(arr, date) {
+    return arr.filter(trip => trip.pastTrip(date))
   }
 
-  filterFutureTrips() {
-    return this.data.filter(trip => trip.futureTrip(getTodaysDate()))
+  filterFutureTrips(arr, date) {
+    return arr.filter(trip => trip.futureTrip(date))
   }
 
-  getCurrentTrip() {
-    return this.data.find(trip => trip.currentTrip(getTodaysDate()))
+  getCurrentTrip(arr, date) {
+    return arr.find(trip => trip.currentTrip(date))
   }
 
   filterById(travelerId) {
@@ -24,18 +24,30 @@ class TripRepo {
     return filterId;
   }
 
-  filterByYear(date, trips) {
-    
+  filterByYear(trips, date) {
+    let year = new Date(date).getFullYear();
+    return trips.filter((trip) => {
+      return trip.startDate().getFullYear() === year
+    })
+  }
+
+  getPaidTrips(travelerId, date) {
+    let trips = this.filterById(travelerId);
+    let pastAndCurrentTrips = this.filterPastTrips(trips, date);
+    let currentTrip = this.getCurrentTrip(trips, date);
+    if(currentTrip) {
+      pastAndCurrentTrips.push(currentTrip);
+    }
+    return this.filterByYear(pastAndCurrentTrips, date);
   }
 
   getYearTotal(travelerId, destinationsArr) {
     let date = getTodaysDate();
-    let trips = this.filterById(travelerId)
-    let thisYearsTrips = this.filterByYear(date, trips)
+    let paidTrips = this.getPaidTrips(travelerId, date);
   }
 
-  //Need a currentTravelerID
-// need to get the trips for currentTraveler for THIS year.
+  //Need a currentTravelerID - check
+// need to get the trips for currentTraveler for THIS year. - check
 // then take the trips and get the destinationID, total travelers, and duration
 // with the destinationID get the destinations estimatedLodgingCostPerDay and * by #of travelers * duration
 // Then add to that total the (estimatedFlighCostPerPerson * total travelers)
