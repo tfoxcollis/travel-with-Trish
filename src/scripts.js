@@ -22,26 +22,28 @@ let paidVacations;
 const fetchUserData = () => {
   Promise.all([
     getData("travelers"),
-    getData("trips"),
-    getData("destinations")
+    getData("destinations"),
+    getData("trips")
   ]).then((data) => {
 
     let travelers = data[0].travelers.map((traveler) => {
       return new Traveler(traveler);
     });
 
-    let trips = data[1].trips.map((trip) => {
-      return new Trip(trip);
-    });
-
-    let destinations = data[2].destinations.map((destination) => {
+    let destinations = data[1].destinations.map((destination) => {
       return new Destination(destination);
     });
+
+    let trips = data[2].trips.map((trip) => {
+      let destination = destinations.find(destination => destination.id == trip.destinationID)
+      return new Trip(trip, destination);
+    });
+
     travelerRepo = new TravelerRepo(travelers);
     tripRepo = new TripRepo(trips);
     destinationRepo = new DestinationRepo(destinations);
     currentTraveler = travelerRepo.data[36];
-    paidVacations = tripRepo.getYearTotal(currentTraveler.id, destinationRepo.data)
+    paidVacations = tripRepo.getYearTotal(currentTraveler.id)
   }).catch((error) =>
   console.log(error, "Error is coming back from the server")
   );
