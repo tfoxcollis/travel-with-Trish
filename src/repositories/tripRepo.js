@@ -1,15 +1,15 @@
 class TripRepo {
   constructor(tripData) {
-    this.id = tripData.id;
-    this.userID = tripData.userID;
-    this.destinationID = tripData.destinationID;
-    this.travelers = tripData.travelers;
-    this.date = tripData.date;
-    this.duration = tripData.duration;
-    this.status = tripData.status;
-    this.suggestedActivities = tripData.suggestedActivities;
+    this.data = tripData;
   }
 
   
-
+  //Need a currentTraveler
+// need to get the trips for currentTraveler for THIS year.
+// then take the trips and get the destinationID, total travelers, and duration
+// with the destinationID get the destinations estimatedLodgingCostPerDay and * by #of travelers * duration
+// Then add to that total the (estimatedFlighCostPerPerson * total travelers)
+// take that total and * .10 for the agent fee. 
 }
+
+export default TripRepo;
