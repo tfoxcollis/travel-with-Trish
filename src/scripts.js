@@ -36,7 +36,6 @@ const fetchUserData = () => {
     let destinations = data[2].destinations.map((destination) => {
       return new Destination(destination);
     });
-    debugger
     travelerRepo = new TravelerRepo(travelers);
     tripRepo = new TripRepo(trips);
     destinationRepo = new DestinationRepo(destinations);

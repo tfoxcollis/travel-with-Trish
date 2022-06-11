@@ -19,6 +19,30 @@ class Trip {
     endDate.setDate(this.startDate().getDate() + this.duration)
     return endDate
   }
+
+  pastTrip(currentDate) {
+    let today = new Date(currentDate);
+    if(today > this.endDate()) {
+      return true;
+    }
+    return false
+  }
+
+  currentTrip(currentDate) {
+    let today = new Date(currentDate);
+    if(today >= this.startDate() && today <= this.endDate()) {
+      return true 
+    }
+    return false
+  }
+
+  futureTrip(currentDate) {
+    let today = new Date(currentDate);
+    if(today < this.startDate()) {
+      return true;
+    }
+    return false
+  }
 }
 
 export default Trip;

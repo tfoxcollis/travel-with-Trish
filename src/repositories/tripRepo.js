@@ -5,6 +5,17 @@ class TripRepo {
     this.data = tripData;
   }
 
+  filterPastTrips() {
+    return this.data.filter(trip => trip.pastTrip(getTodaysDate()))
+  }
+
+  filterFutureTrips() {
+    return this.data.filter(trip => trip.futureTrip(getTodaysDate()))
+  }
+
+  getCurrentTrip() {
+    return this.data.find(trip => trip.currentTrip(getTodaysDate()))
+  }
 
   filterById(travelerId) {
     let filterId = this.data.filter((trip) => {
