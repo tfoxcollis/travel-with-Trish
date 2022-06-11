@@ -10,7 +10,15 @@ class Trip {
     this.suggestedActivities = tripData.suggestedActivities;
   }
 
-  
+  startDate() {
+    return new Date(this.date);
+  }
+
+  endDate() {
+    let endDate = this.startDate();
+    endDate.setDate(this.startDate().getDate() + this.duration)
+    return endDate
+  }
 }
 
 export default Trip;

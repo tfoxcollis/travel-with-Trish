@@ -4,12 +4,11 @@ import TravelerRepo from "./repositories/travelerRepo";
 import Traveler from "../src/traveler";
 import TripRepo from "./repositories/tripRepo.js";
 import Trip from "./trip.js";
-import destinationRepo from "./repositories/destinationRepo.js";
+import DestinationRepo from "./repositories/destinationRepo.js";
 import Destination from "./destination.js";
 
 import './css/styles.css';
 import './images/turing-logo.png'
-import DestinationRepo from "./repositories/destinationRepo.js";
 
 // Global Variables
 let travelerRepo;
