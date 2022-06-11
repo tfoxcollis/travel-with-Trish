@@ -1,4 +1,4 @@
-import { getTodaysDate } from "../utils.js"
+import { getTodaysDate, calculateTripCost } from "../utils.js"
 
 class TripRepo {
   constructor(tripData) {
@@ -44,6 +44,14 @@ class TripRepo {
   getYearTotal(travelerId, destinationsArr) {
     let date = getTodaysDate();
     let paidTrips = this.getPaidTrips(travelerId, date);
+    let totalExpenses = paidTrips.reduce((acc, trip) => {
+      let destination = destinationsArr.find((destination) => {
+        return destination.id == trip.destinationID
+      })
+      acc += calculateTripCost(trip, destination)
+      return acc;
+    }, 0);
+    return totalExpenses;
   }
 
   //Need a currentTravelerID - check

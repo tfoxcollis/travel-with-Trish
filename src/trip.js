@@ -43,8 +43,6 @@ class Trip {
     }
     return false
   }
-
-  
 }
 
 export default Trip;

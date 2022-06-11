@@ -15,6 +15,7 @@ let travelerRepo;
 let tripRepo;
 let destinationRepo;
 let currentTraveler;
+let paidVacations;
 
 //functions
 
@@ -40,8 +41,7 @@ const fetchUserData = () => {
     tripRepo = new TripRepo(trips);
     destinationRepo = new DestinationRepo(destinations);
     currentTraveler = travelerRepo.data[36];
-    let paidVacations = tripRepo.getYearTotal(currentTraveler.id, destinationRepo.data)
-
+    paidVacations = tripRepo.getYearTotal(currentTraveler.id, destinationRepo.data)
   }).catch((error) =>
   console.log(error, "Error is coming back from the server")
   );
