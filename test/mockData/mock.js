@@ -141,10 +141,11 @@ const trips = [
   },
 ];
 
+const travelerInstances = travelers.map(traveler => new Traveler(traveler));
 const tripInstances = trips.map((trip) => {
   let destination = destinationInstances.find(d => d.id == trip.destinationID)
   return new Trip(trip, destination)
 });
 const tripRepo = new TripRepo(tripInstances);
 
-export {travelers, destinationInstances, trips, tripInstances, tripRepo};
+export {travelers, destinationInstances, trips, travelerInstances, tripInstances, tripRepo};
