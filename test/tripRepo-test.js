@@ -40,4 +40,28 @@ describe("trip", () => {
     }]
     expect(tripRepo.filterPastTrips(tripRepo.data, "2022/06/11")).to.deep.equal(pastTrips)
   });
+
+  it("Should filter future trips", () => {
+
+  });
+
+  it("Should get current trip", () => {
+
+  });
+
+  it("Should filter by id", () => {
+
+  });
+
+  it("Should filter by year", () => {
+
+  });
+
+  it("Should get paid trips", () => {
+
+  });
+
+  it ("Should get Year Total", () => {
+
+  });
 });
