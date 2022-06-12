@@ -75,7 +75,7 @@ const travelers =
         "userID": 29,
         "destinationID": 35,
         "travelers": 3,
-        "date": "2022/06/29",
+        "date": "2022/06/10",
         "duration": 9,
         "status": "approved",
         "suggestedActivities": []
