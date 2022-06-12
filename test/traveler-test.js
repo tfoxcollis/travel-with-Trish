@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import Traveler from "../src/traveler.js"
-import travelers from "./mockData/mock.js"
+import {travelers} from "./mockData/mock.js"
 
 describe("Traveler", () => {
   let traveler1;
