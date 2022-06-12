@@ -1,7 +1,6 @@
 import { expect } from "chai";
-import TripRepo from "../src/repositories/tripRepo";
-import Trip from "../src/trip";
-import {trips, tripRepo, tripInstances, destinationInstances} from "./mockData/mock.js";
+
+import { tripRepo, tripInstances, destinationInstances } from "./mockData/mock.js";
 
 describe("trip", () => {
   let date;
