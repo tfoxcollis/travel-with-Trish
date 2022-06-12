@@ -117,10 +117,13 @@ describe("trip", () => {
   });
 
   it("Should get paid trips", () => {
+    let paidTrips = [tripInstances[3]]
 
+    expect(tripRepo.getPaidTrips(43, date)).to.deep.equal(paidTrips)
   });
 
-  it.skip("Should get Year Total", () => {
-
+  it("Should get Year Total", () => {
+    expect(tripRepo.getYearTotal(43)).to.deep.equal(2596)
+    expect(tripRepo.getYearTotal(42)).to.deep.equal(5214)
   });
 });
