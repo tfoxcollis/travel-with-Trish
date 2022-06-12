@@ -6,9 +6,19 @@ import TripRepo from "./repositories/tripRepo.js";
 import Trip from "./trip.js";
 import DestinationRepo from "./repositories/destinationRepo.js";
 import Destination from "./destination.js";
+import { getTodaysDate } from "./utils.js";
 
 import './css/styles.css';
 import './images/turing-logo.png'
+
+//queryselectors
+let userForm = document.querySelector("#userForm");
+let searchButton = document.querySelector("#searchButton");
+let currentButton = document.querySelector("#currentButton");
+let upcomingButton = document.querySelector("#upcomingButton");
+let pastButton = document.querySelector("#pastButton");
+let pendingButton = document.querySelector("#pendingButton");
+let tripBox = document.querySelector("#tripBox");
 
 // Global Variables
 let travelerRepo;
@@ -16,6 +26,7 @@ let tripRepo;
 let destinationRepo;
 let currentTraveler;
 let paidVacations;
+let todaysDate = getTodaysDate();
 
 //functions
 
@@ -50,11 +61,42 @@ const fetchUserData = () => {
 }
 
 
+const getCurrentTrip = () => {
+  let tripByID = tripRepo.filterById(currentTraveler.id);
+  return tripRepo.getCurrentTrip(tripByID, todaysDate);
 
+}
 
+const displayCurrentTrip = (currentTrip) => {
+  tripBox.innerHTML = `
+  <section class="trip-container">
+   <h4> Date of Trip: ${currentTrip.date},<br>
+    Duration: ${currentTrip.duration},<br>
+    Destination: ${currentTrip.destination.destination},<br>
+    Travelers: ${currentTrip.travelers}, <br>
+    Status: ${currentTrip.status}
+    </h4>
+  </section>
+  `
+}
+
+const toggleDisplay = (event) => {
+  if(event.target.id == "searchButton"){
+    userForm.classList.remove("hidden");
+    tripBox.classList.add("hidden");
+  }else{
+    userForm.classList.add("hidden");
+    tripBox.classList.remove("hidden");
+  }
+}
 
 //eventlisteners
 
 window.addEventListener("load", () => {
   fetchUserData();
+})
+
+currentButton.addEventListener("click", (event) => {
+  toggleDisplay(event)
+  displayCurrentTrip(getCurrentTrip());
 })

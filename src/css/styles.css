@@ -48,3 +48,12 @@ ul.navbar li {
   justify-content: space-evenly;
   text-align: center;
 }
+
+.trip-box {
+  border: solid 2px black;
+  height: 200px;
+  width: 150px;
+}
+.hidden {
+  display: none;
+}
