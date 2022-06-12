@@ -11,5 +11,6 @@ describe("Traveler", () => {
       return new Traveler(traveler)
     })
 
-    travelerRepo = 
+    // travelerRepo = 
   });
+});
