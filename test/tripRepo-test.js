@@ -1,18 +1,13 @@
 import { expect } from "chai";
 import TripRepo from "../src/repositories/tripRepo";
 import Trip from "../src/trip";
-import {trips} from "./mockData/mock.js";
+import {trips, tripRepo, tripInstances, destinationInstances} from "./mockData/mock.js";
 
 describe("trip", () => {
-  let trip1;
-  let tripRepo;
   let date;
 
   beforeEach(() => {
     date = "2022/06/11";
-    let tripInstances = trips.map(trip => new Trip(trip));
-    tripRepo = new TripRepo(tripInstances);
-    trip1 = trips[0];
   });
 
   it("Should filter past trips", () => {
@@ -21,9 +16,9 @@ describe("trip", () => {
         "id": 3,
         "userID": 3,
         "destinationID": 22,
-        "destination": undefined,
+        "destination": destinationInstances[2],
         "travelers": 4,
-        "date": "2022/05/22",
+        "date": "2021/05/22",
         "duration": 17,
         "status": "approved",
         "suggestedActivities": []
@@ -31,13 +26,23 @@ describe("trip", () => {
       "id": 4,
       "userID": 43,
       "destinationID": 14,
-      "destination": undefined,
+      "destination": destinationInstances[3],
       "travelers": 2,
       "date": "2022/02/25",
       "duration": 10,
       "status": "approved",
       "suggestedActivities": []
-    }]
+    },{
+      "id": 5,
+      "userID": 42,
+      "destinationID": 29,
+      "destination": destinationInstances[4],
+      "travelers": 3,
+      "date": "2022/04/30",
+      "duration": 18,
+      "status": "approved",
+      "suggestedActivities": []
+  }]
     expect(tripRepo.filterPastTrips(tripRepo.data, date)).to.deep.equal(pastTrips)
   });
 
@@ -47,7 +52,7 @@ describe("trip", () => {
         "id": 1,
         "userID": 44,
         "destinationID": 49,
-        "destination": undefined,
+        "destination": destinationInstances[0],
         "travelers": 1,
         "date": "2022/09/16",
         "duration": 8,
@@ -57,34 +62,65 @@ describe("trip", () => {
         "id": 2,
         "userID": 35,
         "destinationID": 25,
-        "destination": undefined,
+        "destination": destinationInstances[1],
         "travelers": 5,
         "date": "2022/10/04",
         "duration": 18,
         "status": "approved",
         "suggestedActivities": []
-      }
-    ]
+      }]
     expect(tripRepo.filterFutureTrips(tripRepo.data, date)).to.deep.equal(futureTrips);
   });
 
   it("Should get current trip", () => {
+    let currentTrip = {
+      "id": 6,
+      "userID": 29,
+      "destinationID": 35,
+      "destination": destinationInstances[5],
+      "travelers": 3,
+      "date": "2022/06/10",
+      "duration": 9,
+      "status": "approved",
+      "suggestedActivities": []
+    }
 
+    expect(tripRepo.getCurrentTrip(tripRepo.data, date)).to.deep.equal(currentTrip)
   });
 
   it("Should filter by id", () => {
-
+    let filteredTrip =   [{
+      "id": 6,
+      "userID": 29,
+      "destinationID": 35,
+      "destination": destinationInstances[5],
+      "travelers": 3,
+      "date": "2022/06/10",
+      "duration": 9,
+      "status": "approved",
+      "suggestedActivities": []
+    }]
+    
+    expect(tripRepo.filterById(29)).to.deep.equal(filteredTrip)
   });
 
   it("Should filter by year", () => {
+    let yearFiltered = [
+      tripInstances[0],
+      tripInstances[1],  
+      tripInstances[3],
+      tripInstances[4],
+      tripInstances[5]
+    ]
 
+    expect(tripRepo.filterByYear(tripRepo.data, date)).to.deep.equal(yearFiltered)
   });
 
   it("Should get paid trips", () => {
 
   });
 
-  it ("Should get Year Total", () => {
+  it.skip("Should get Year Total", () => {
 
   });
 });

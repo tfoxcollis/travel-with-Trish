@@ -27,7 +27,8 @@ class TripRepo {
   filterByYear(trips, date) {
     let year = new Date(date).getFullYear();
     return trips.filter((trip) => {
-      return trip.startDate().getFullYear() === year
+      let thisYear = trip.startDate().getFullYear() === year
+        return thisYear;
     })
   }
 
@@ -51,12 +52,6 @@ class TripRepo {
     return totalExpenses;
   }
 
-  //Need a currentTravelerID - check
-// need to get the trips for currentTraveler for THIS year. - check
-// then take the trips and get the destinationID, total travelers, and duration
-// with the destinationID get the destinations estimatedLodgingCostPerDay and * by #of travelers * duration
-// Then add to that total the (estimatedFlighCostPerPerson * total travelers)
-// take that total and * .10 for the agent fee. 
 }
 
 export default TripRepo;
