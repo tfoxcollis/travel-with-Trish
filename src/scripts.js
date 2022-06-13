@@ -53,7 +53,7 @@ const fetchUserData = () => {
     travelerRepo = new TravelerRepo(travelers);
     tripRepo = new TripRepo(trips);
     destinationRepo = new DestinationRepo(destinations);
-    currentTraveler = travelerRepo.data[36];
+    currentTraveler = travelerRepo.data[37];
     paidVacations = tripRepo.getYearTotal(currentTraveler.id)
   }).catch((error) =>
   console.log(error, "Error is coming back from the server")
@@ -144,6 +144,37 @@ const displayPastTrips = (pastTrips) => {
   });
 }
 
+const getPendingTrips = (pendingTrips) => {
+  let tripByID = tripRepo.filterById(currentTraveler.id);
+  return tripRepo.filterPendingTrips(tripByID, todaysDate);
+}
+
+const displayPendingTrips = (pendingTrips) => {
+  tripContainer.innerHTML = ``;
+  if(pendingTrips.length == 0){
+    tripContainer.innerHTML = `
+     <h2>You do not currently have pending trips.</h2>
+    `
+    tripContainer.classList.add("center")
+    return
+  }
+  tripContainer.classList.remove("center")
+
+  pendingTrips.forEach((trip) => {
+    tripContainer.innerHTML += `
+    <section class="trip-box">
+      <h4> Date of Trip: ${trip.date}<br>
+      Duration: ${trip.duration} days<br>
+      Destination: ${trip.destination.destination}<br>
+      Travelers: ${trip.travelers} <br>
+      Status: ${trip.status}<br>
+      Total Cost: $${calculateTripCost(trip)}
+      </h4>
+    </section>
+    `
+  });
+}
+
 const toggleDisplay = (event) => {
   if(event.target.id == "searchButton"){
     userForm.classList.remove("hidden");
@@ -177,4 +208,9 @@ upcomingButton.addEventListener("click", (event) => {
 pastButton.addEventListener("click", (event) => {
   toggleDisplay(event);
   displayPastTrips(getPastTrips());
+});
+
+pendingButton.addEventListener("click", (event) => {
+  toggleDisplay(event);
+  displayPendingTrips(getPendingTrips());
 })
