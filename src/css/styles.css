@@ -42,11 +42,19 @@ ul.navbar li {
 
 .main-box {
   border: solid 2px red;
-  height: 70%;
+  min-height: 70%;
   display: flex;
   justify-content: center;
   text-align: center;
 }
+
+.search-page {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .user-form {
   border: solid 2px black;
   height: 30%;
@@ -57,6 +65,21 @@ ul.navbar li {
   flex-direction: column;
   justify-content: space-evenly;
   text-align: center;
+}
+
+.selected-trip {
+  border: solid 2px black;
+  width: 70%;
+  padding: 50px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  text-align: center;
+}
+
+.image-preview {
+  width: 40%;
 }
 
 .trip-container {
