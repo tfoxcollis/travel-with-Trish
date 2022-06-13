@@ -17,6 +17,10 @@ class TripRepo {
     return arr.find(trip => trip.currentTrip(date))
   }
 
+  filterPendingTrips(arr, date) {
+    return arr.filter(trip => trip.status == "pending")
+  }
+
   filterById(travelerId) {
     let filterId = this.data.filter((trip) => {
       return trip.userID == travelerId
@@ -51,6 +55,8 @@ class TripRepo {
     }, 0);
     return totalExpenses;
   }
+
+  
 
 }
 
