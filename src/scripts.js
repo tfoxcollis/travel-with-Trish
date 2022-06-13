@@ -12,7 +12,9 @@ import './css/styles.css';
 import './images/turing-logo.png'
 
 //queryselectors
+let searchPage = document.querySelector("#searchPage");
 let userForm = document.querySelector("#userForm");
+let selectedTrip = document.querySelector("#selectedTrip");
 let searchButton = document.querySelector("#searchButton");
 let currentButton = document.querySelector("#currentButton");
 let upcomingButton = document.querySelector("#upcomingButton");
@@ -21,6 +23,7 @@ let pendingButton = document.querySelector("#pendingButton");
 let tripContainer = document.querySelector("#tripContainer");
 let welcome = document.querySelector("#welcome");
 let destinationsSelect = document.querySelector("#destinations");
+let tripSubmit = document.querySelector("#tripSubmit");
 
 // Global Variables
 let travelerRepo;
@@ -28,6 +31,7 @@ let tripRepo;
 let destinationRepo;
 let currentTraveler;
 let paidVacations;
+let potentialTrip;
 let todaysDate = getTodaysDate();
 
 //functions
@@ -196,17 +200,55 @@ const displayPendingTrips = (pendingTrips) => {
     </section>
     `
   });
-}
+};
 
 const toggleDisplay = (event) => {
   if(event.target.id == "searchButton"){
-    userForm.classList.remove("hidden");
+    searchPage.classList.remove("hidden");
     tripContainer.classList.add("hidden");
   }else{
-    userForm.classList.add("hidden");
+    searchPage.classList.add("hidden");
     tripContainer.classList.remove("hidden");
   }
+};
+
+const getFormData = (event) => {
+  let form = event.target.closest("form");
+  let inputs = Array.from(form.querySelectorAll("input"));
+  inputs = inputs.filter(input => input.type != "submit");
+  inputs.push(form.querySelector("select"))
+  return inputs.map((input) => {
+    return {name: input.name, value: input.value}
+  });
+};
+
+const createNewTrip = (formData, destination) => {
+  let id = tripRepo.data.length + 1
+  let trip = {
+    id: id,
+    userID: currentTraveler.id,
+    destinationID: destination.id,
+    travelers: parseInt(formData[2].value),
+    date: formData[0].value.split("-").join("/"),
+    duration: parseInt(formData[1].value),
+    status: "pending",
+    suggestedActivities: []
+  }
+  return new Trip(trip, destination)
 }
+
+const displaySelectedTripToBook = (formData, destination) => {
+  potentialTrip = createNewTrip(formData, destination);
+  selectedTrip.innerHTML = `
+    <img class="image-preview" src="${destination.image} alt="${destination.alt}">
+    <article>
+      <h3>Estimated Cost: $${calculateTripCost(potentialTrip)}</h3>
+      
+    </article>
+  `
+
+
+};
 
 //eventlisteners
 
@@ -236,4 +278,13 @@ pastButton.addEventListener("click", (event) => {
 pendingButton.addEventListener("click", (event) => {
   toggleDisplay(event);
   displayPendingTrips(getPendingTrips());
+})
+
+tripSubmit.addEventListener("click", (event) => {
+  event.preventDefault();
+  let formData = getFormData(event);
+  let destination = destinationRepo.data.find((destination) => {
+    return destination.id == formData[3].value
+  })
+  displaySelectedTripToBook(formData, destination);
 })

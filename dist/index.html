@@ -20,18 +20,22 @@
     </ul>
   </header>
   <main class="main-box">
-    <section class="user-form" id="userForm">
-      <form action="" method="get">
-        <label for="date">Date</label>
-        <input type="date" name="date" id="">
-        <label for="duration">Duration</label>
-        <input type="number" name="duration" id="">
-        <label for="number of travelers">Number of Travelers</label>
-        <input type="number" name="number of travelers" id=""><br><br>
-        <label for="Destination">Destination</label>
-        <select name="Destination" id="destinations"></select>
-        <input type="submit" value="search">
-      </form>
+    <section class="search-page" id="searchPage">
+      <section class="user-form" id="userForm">
+        <form action="" method="get">
+          <label for="date">Date</label>
+          <input type="date" name="date" id="">
+          <label for="duration">Duration</label>
+          <input type="number" name="duration" id="">
+          <label for="travelers">Number of Travelers</label>
+          <input type="number" name="travelers" id=""><br><br>
+          <label for="destinationID">Destination</label>
+          <select name="destinationID" id="destinations"></select>
+          <input type="submit" value="search" id="tripSubmit">
+        </form>
+      </section>
+      <section class="selected-trip" id="selectedTrip">
+      </section>
     </section>
     <section class="trip-container hidden" id="tripContainer">
     </section>
