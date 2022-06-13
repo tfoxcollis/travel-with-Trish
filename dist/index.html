@@ -21,24 +21,39 @@
     </ul>
   </header>
   <main class="main-box">
-    <section class="search-page" id="searchPage">
-      <section class="user-form" id="userForm">
-        <form action="" method="get">
-          <label for="date">Date</label>
-          <input type="date" name="date" id="date">
-          <label for="duration">Duration</label>
-          <input type="number" name="duration" id="duration" value="0">
-          <label for="travelers">Number of Travelers</label>
-          <input type="number" name="travelers" id="travelers" value="0"><br><br>
-          <label for="destinationID">Destination</label>
-          <select name="destinationID" id="destinationID"></select>
-          <input type="submit" value="search" id="tripSubmit">
-        </form>
-      </section>
-      <section class="selected-trip" id="selectedTrip">
-      </section>
+    <section class="signin-container">
+      <form action="" class="form" id="login">
+        <h1 class="form-title">Login</h1>
+        <div class="form-message form-message-error">Incorrect username/password combination.</div>
+        <div class="form-input-group">
+          <input type="text" class="form__input" autofocus placeholder="Username"> 
+        </div>
+        <div class="form-input-group">
+          <input type="password" class="form__input" autofocus placeholder="Password"> 
+        </div>
+        <button class="form-button" type="submit">Continue</button>
+      </form>
     </section>
-    <section class="trip-container hidden" id="tripContainer">
+    <section class="signed-in-container hidden">
+      <section class="search-page" id="searchPage">
+        <section class="user-form" id="userForm">
+          <form action="" method="get">
+            <label for="date">Date</label>
+            <input type="date" name="date" id="date">
+            <label for="duration">Duration</label>
+            <input type="number" name="duration" id="duration" value="0">
+            <label for="travelers">Number of Travelers</label>
+            <input type="number" name="travelers" id="travelers" value="0"><br><br>
+            <label for="destinationID">Destination</label>
+            <select name="destinationID" id="destinationID"></select>
+            <input type="submit" value="search" id="tripSubmit">
+          </form>
+        </section>
+        <section class="selected-trip" id="selectedTrip">
+        </section>
+      </section>
+      <section class="trip-container hidden" id="tripContainer">
+      </section>
     </section>
   </main> 
   <script src="bundle.js"></script>
