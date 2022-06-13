@@ -129,6 +129,6 @@ describe("trip", () => {
   it("Should get pending trips", () => {
     let pendingTrip = [tripInstances[0]];
 
-    expect(tripRepo.filterPendingTrips(tripRepo.data, date)).to.deep.equal(pendingTrip);
+    expect(tripRepo.filterByStatus(tripRepo.data, "pending")).to.deep.equal(pendingTrip);
   })
 });

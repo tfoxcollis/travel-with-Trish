@@ -83,7 +83,7 @@ const setDisplays = () => {
   populateDestinationsSelect();
 }
 const getCurrentTrip = () => {
-  let tripByID = tripRepo.filterById(currentTraveler.id);
+  let tripByID = tripRepo.filterById(currentTraveler.id, "approved");
   return tripRepo.findCurrentTrip(tripByID, todaysDate);
 
 }
@@ -110,7 +110,7 @@ const displayCurrentTrip = (currentTrip) => {
 };
 
 const getFutureTrips = () => {
-  let tripByID = tripRepo.filterById(currentTraveler.id);
+  let tripByID = tripRepo.filterById(currentTraveler.id, "approved");
   return tripRepo.filterFutureTrips(tripByID, todaysDate);
 }
 
@@ -118,7 +118,8 @@ const displayUpcomingTrips = (upcomingTrips) => {
   tripContainer.innerHTML = ``;
   if(upcomingTrips.length == 0){
     tripContainer.innerHTML = `
-     <h2>You do not currently have upcoming trips.</h2>
+     <h2>You do not currently have any approved upcoming trips.<br>
+    Check to see if any trip is pending.</h2>
     `
     tripContainer.classList.add("center")
     return
@@ -141,7 +142,7 @@ const displayUpcomingTrips = (upcomingTrips) => {
 }
 
 const getPastTrips = () => {
-  let tripByID = tripRepo.filterById(currentTraveler.id);
+  let tripByID = tripRepo.filterById(currentTraveler.id, "approved");
   return tripRepo.filterPastTrips(tripByID, todaysDate);
 }
 
@@ -173,7 +174,7 @@ const displayPastTrips = (pastTrips) => {
 
 const getPendingTrips = (pendingTrips) => {
   let tripByID = tripRepo.filterById(currentTraveler.id);
-  return tripRepo.filterPendingTrips(tripByID, todaysDate);
+  return tripRepo.filterByStatus(tripByID, "pending");
 }
 
 const displayPendingTrips = (pendingTrips) => {
