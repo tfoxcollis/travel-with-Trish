@@ -59,6 +59,7 @@ ul.navbar li {
   border: solid 2px black;
   height: 250px;
   width: 30%;
+  margin: 1%;
 }
 .hidden {
   display: none;

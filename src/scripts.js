@@ -60,16 +60,10 @@ const fetchUserData = () => {
   );
 }
 
-
 const getCurrentTrip = () => {
   let tripByID = tripRepo.filterById(currentTraveler.id);
   return tripRepo.findCurrentTrip(tripByID, todaysDate);
 
-}
-
-const getFutureTrips = () => {
-  let tripByID = tripRepo.filterById(currentTraveler.id);
-  return tripRepo.filterFutureTrips(tripByID, todaysDate);
 }
 
 const displayCurrentTrip = (currentTrip) => {
@@ -77,16 +71,21 @@ const displayCurrentTrip = (currentTrip) => {
   tripContainer.classList.add("center")
   tripContainer.innerHTML = `
   <section class="trip-box">
-   <h4> Date of Trip: ${currentTrip.date}<br>
-    Duration: ${currentTrip.duration}<br>
-    Destination: ${currentTrip.destination.destination}<br>
-    Travelers: ${currentTrip.travelers} <br>
-    Status: ${currentTrip.status}<br>
-    Total Cost: $${calculateTripCost(currentTrip)}
-    </h4>
+  <h4> Date of Trip: ${currentTrip.date}<br>
+  Duration: ${currentTrip.duration} days<br>
+  Destination: ${currentTrip.destination.destination}<br>
+  Travelers: ${currentTrip.travelers} <br>
+  Status: ${currentTrip.status}<br>
+  Total Cost: $${calculateTripCost(currentTrip)}
+  </h4>
   </section>
   `
 };
+
+const getFutureTrips = () => {
+  let tripByID = tripRepo.filterById(currentTraveler.id);
+  return tripRepo.filterFutureTrips(tripByID, todaysDate);
+}
 
 const displayUpcomingTrips = (upcomingTrips) => {
   tripContainer.innerHTML = ``;
@@ -103,7 +102,38 @@ const displayUpcomingTrips = (upcomingTrips) => {
     tripContainer.innerHTML += `
     <section class="trip-box">
       <h4> Date of Trip: ${trip.date}<br>
-      Duration: ${trip.duration}<br>
+      Duration: ${trip.duration} days<br>
+      Destination: ${trip.destination.destination}<br>
+      Travelers: ${trip.travelers} <br>
+      Status: ${trip.status}<br>
+      Total Cost: $${calculateTripCost(trip)}
+      </h4>
+    </section>
+    `
+  });
+}
+
+const getPastTrips = () => {
+  let tripByID = tripRepo.filterById(currentTraveler.id);
+  return tripRepo.filterPastTrips(tripByID, todaysDate);
+}
+
+const displayPastTrips = (pastTrips) => {
+  tripContainer.innerHTML = ``;
+  if(pastTrips.length == 0){
+    tripContainer.innerHTML = `
+     <h2>You do not currently have past trips.</h2>
+    `
+    tripContainer.classList.add("center")
+    return
+  }
+  tripContainer.classList.remove("center")
+
+  pastTrips.forEach((trip) => {
+    tripContainer.innerHTML += `
+    <section class="trip-box">
+      <h4> Date of Trip: ${trip.date}<br>
+      Duration: ${trip.duration} days<br>
       Destination: ${trip.destination.destination}<br>
       Travelers: ${trip.travelers} <br>
       Status: ${trip.status}<br>
@@ -143,3 +173,8 @@ upcomingButton.addEventListener("click", (event) => {
   toggleDisplay(event)
   displayUpcomingTrips(getFutureTrips());
 });
+
+pastButton.addEventListener("click", (event) => {
+  toggleDisplay(event);
+  displayPastTrips(getPastTrips());
+})
