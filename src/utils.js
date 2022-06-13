@@ -4,10 +4,10 @@ import Destination from "./destination";
 import Trip from "./trip";
 
 const getTodaysDate = () => {
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0');
-  var yyyy = today.getFullYear();
+  let today = new Date();
+  let dd = String(today.getDate()).padStart(2, '0');
+  let mm = String(today.getMonth() + 1).padStart(2, '0');
+  let yyyy = today.getFullYear();
 
   return yyyy + '/' + mm + '/' + dd;
 }

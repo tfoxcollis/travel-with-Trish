@@ -22,7 +22,7 @@ let pastButton = document.querySelector("#pastButton");
 let pendingButton = document.querySelector("#pendingButton");
 let tripContainer = document.querySelector("#tripContainer");
 let welcome = document.querySelector("#welcome");
-let destinationsSelect = document.querySelector("#destinations");
+let destinationsSelect = document.querySelector("#destinationID");
 let tripSubmit = document.querySelector("#tripSubmit");
 
 // Global Variables
@@ -65,7 +65,7 @@ const fetchUserData = () => {
   }).catch((error) =>
   console.log(error, "Error is coming back from the server")
   );
-}
+};
 
 const populateDestinationsSelect = () => {
   destinationRepo.data.forEach((destination) => {
@@ -73,13 +73,19 @@ const populateDestinationsSelect = () => {
     <option value="${destination.id}">${destination.destination}</option>`
 
   })
-}
+};
+
+const addRestrictionsToDateInput = () => {
+  let date = userForm.querySelector("#date");
+  date.setAttribute("min", todaysDate.split("/").join("-"));
+};
 
 const setDisplays = () => {
   welcome.innerHTML = `
   <h1 class="welcome-user">Welcome, ${currentTraveler.returnFirstName()}!</h1>
-  <h3 class="welcome-total">You've spent: $${tripRepo.getYearTotal(currentTraveler.id)} this year.</h3>
+  <h2 class="welcome-total">You've spent: $${tripRepo.getYearTotal(currentTraveler.id)} this year.</h2>
   `
+  addRestrictionsToDateInput();
   populateDestinationsSelect();
 }
 const getCurrentTrip = () => {
@@ -253,7 +259,11 @@ const postPotentialTrip = () => {
 const resetSearchPage = () => {
   let inputs = Array.from(userForm.querySelectorAll("input"));
   inputs.forEach((input) => {
-    if(input.id != "tripSubmit") {
+    if(input.id == "tripSubmit") {
+      return;
+    } else if (input.type == "number") {
+      input.value = '0';
+    } else {
       input.value = '';
     }
   })
