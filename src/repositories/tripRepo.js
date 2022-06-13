@@ -13,7 +13,7 @@ class TripRepo {
     return arr.filter(trip => trip.futureTrip(date))
   }
 
-  getCurrentTrip(arr, date) {
+  findCurrentTrip(arr, date) {
     return arr.find(trip => trip.currentTrip(date))
   }
 
@@ -35,7 +35,7 @@ class TripRepo {
   getPaidTrips(travelerId, date) {
     let trips = this.filterById(travelerId);
     let pastAndCurrentTrips = this.filterPastTrips(trips, date);
-    let currentTrip = this.getCurrentTrip(trips, date);
+    let currentTrip = this.findCurrentTrip(trips, date);
     if(currentTrip) {
       pastAndCurrentTrips.push(currentTrip);
     }

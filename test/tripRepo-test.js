@@ -84,7 +84,7 @@ describe("trip", () => {
       "suggestedActivities": []
     }
 
-    expect(tripRepo.getCurrentTrip(tripRepo.data, date)).to.deep.equal(currentTrip)
+    expect(tripRepo.findCurrentTrip(tripRepo.data, date)).to.deep.equal(currentTrip)
   });
 
   it("Should filter by id", () => {

@@ -12,15 +12,15 @@
       <h1>Welcome, User</h1>
     </section>
     <ul class="navbar">
-      <li><button type="submit">Search</button></li>
-      <li><button type="submit">Current</button></li>
-      <li><button type="submit">Upcoming</button></li>
-      <li><button type="submit">Past</button></li>
-      <li><button type="submit">Pending</button></li>
+      <li><button type="submit" id="searchButton">Search</button></li>
+      <li><button type="submit" id="currentButton">Current</button></li>
+      <li><button type="submit" id="upcomingButton">Upcoming</button></li>
+      <li><button type="submit" id="pastButton">Past</button></li>
+      <li><button type="submit" id="pendingButton">Pending</button></li>
     </ul>
   </header>
   <main class="main-box">
-    <section class="user-form">
+    <section class="user-form" id="userForm">
       <form action="" method="get">
         <label for="date">Date</label>
         <input type="date" name="date" id="">
@@ -32,6 +32,8 @@
         <select name="Destination" id="">Destination</select>
         <input type="submit" value="search">
       </form>
+    </section>
+    <section class="trip-container hidden" id="tripContainer">
     </section>
   </main> 
   <script src="bundle.js"></script>
