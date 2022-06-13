@@ -22,7 +22,7 @@ let pastButton = document.querySelector("#pastButton");
 let pendingButton = document.querySelector("#pendingButton");
 let tripContainer = document.querySelector("#tripContainer");
 let welcome = document.querySelector("#welcome");
-let destinationsSelect = document.querySelector("#destinations");
+let destinationsSelect = document.querySelector("#destinationID");
 let tripSubmit = document.querySelector("#tripSubmit");
 
 // Global Variables
@@ -78,7 +78,7 @@ const populateDestinationsSelect = () => {
 const setDisplays = () => {
   welcome.innerHTML = `
   <h1 class="welcome-user">Welcome, ${currentTraveler.returnFirstName()}!</h1>
-  <h3 class="welcome-total">You've spent: $${tripRepo.getYearTotal(currentTraveler.id)} this year.</h3>
+  <h2 class="welcome-total">You've spent: $${tripRepo.getYearTotal(currentTraveler.id)} this year.</h2>
   `
   populateDestinationsSelect();
 }
