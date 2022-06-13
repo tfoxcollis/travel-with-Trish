@@ -237,16 +237,43 @@ const createNewTrip = (formData, destination) => {
   return new Trip(trip, destination)
 }
 
+const postPotentialTrip = () => {
+  Promise.all([
+    postData("trips", potentialTrip)
+  ])
+    .then((data) => {
+      fetchUserData();
+    })
+    .catch((error) =>
+      console.log(error, "Error is coming back from the server")
+    )
+};
+
+const resetSearchPage = () => {
+  let inputs = Array.from(userForm.querySelectorAll("input"));
+  inputs.forEach((input) => {
+    if(input.id != "tripSubmit") {
+      input.value = '';
+    }
+  })
+
+  selectedTrip.innerHTML = ''
+}
+
 const displaySelectedTripToBook = (formData, destination) => {
   potentialTrip = createNewTrip(formData, destination);
   selectedTrip.innerHTML = `
     <img class="image-preview" src="${destination.image} alt="${destination.alt}">
     <article>
       <h3>Estimated Cost: $${calculateTripCost(potentialTrip)}</h3>
-      
+      <button class="book-now" id="bookNow">Book</button>
     </article>
   `
-
+  selectedTrip.querySelector("#bookNow").addEventListener("click", (event) => {
+    event.preventDefault();
+    postPotentialTrip();
+    resetSearchPage();
+  })
 
 };
 
