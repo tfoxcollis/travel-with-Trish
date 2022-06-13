@@ -20,6 +20,7 @@ let pastButton = document.querySelector("#pastButton");
 let pendingButton = document.querySelector("#pendingButton");
 let tripContainer = document.querySelector("#tripContainer");
 let welcome = document.querySelector("#welcome");
+let destinationsSelect = document.querySelector("#destinations");
 
 // Global Variables
 let travelerRepo;
@@ -62,11 +63,20 @@ const fetchUserData = () => {
   );
 }
 
+const populateDestinationsSelect = () => {
+  destinationRepo.data.forEach((destination) => {
+    destinationsSelect.innerHTML += `
+    <option value="${destination.id}">${destination.destination}</option>`
+
+  })
+}
+
 const setDisplays = () => {
   welcome.innerHTML = `
   <h1 class="welcome-user">Welcome, ${currentTraveler.returnFirstName()}!</h1>
   <h3 class="welcome-total">You've spent: $${tripRepo.getYearTotal(currentTraveler.id)} this year.</h3>
   `
+  populateDestinationsSelect();
 }
 const getCurrentTrip = () => {
   let tripByID = tripRepo.filterById(currentTraveler.id);
