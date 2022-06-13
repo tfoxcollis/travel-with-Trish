@@ -6,7 +6,7 @@ import TripRepo from "./repositories/tripRepo.js";
 import Trip from "./trip.js";
 import DestinationRepo from "./repositories/destinationRepo.js";
 import Destination from "./destination.js";
-import { getTodaysDate } from "./utils.js";
+import { getTodaysDate, calculateTripCost } from "./utils.js";
 
 import './css/styles.css';
 import './images/turing-logo.png'
@@ -70,11 +70,12 @@ const getCurrentTrip = () => {
 const displayCurrentTrip = (currentTrip) => {
   tripBox.innerHTML = `
   <section class="trip-container">
-   <h4> Date of Trip: ${currentTrip.date},<br>
-    Duration: ${currentTrip.duration},<br>
-    Destination: ${currentTrip.destination.destination},<br>
-    Travelers: ${currentTrip.travelers}, <br>
-    Status: ${currentTrip.status}
+   <h4> Date of Trip: ${currentTrip.date}<br>
+    Duration: ${currentTrip.duration}<br>
+    Destination: ${currentTrip.destination.destination}<br>
+    Travelers: ${currentTrip.travelers} <br>
+    Status: ${currentTrip.status}<br>
+    Total Cost: $${calculateTripCost(currentTrip)}
     </h4>
   </section>
   `
