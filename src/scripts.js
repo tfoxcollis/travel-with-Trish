@@ -19,6 +19,7 @@ let upcomingButton = document.querySelector("#upcomingButton");
 let pastButton = document.querySelector("#pastButton");
 let pendingButton = document.querySelector("#pendingButton");
 let tripContainer = document.querySelector("#tripContainer");
+let welcome = document.querySelector("#welcome");
 
 // Global Variables
 let travelerRepo;
@@ -55,11 +56,17 @@ const fetchUserData = () => {
     destinationRepo = new DestinationRepo(destinations);
     currentTraveler = travelerRepo.data[37];
     paidVacations = tripRepo.getYearTotal(currentTraveler.id)
+    setDisplays();
   }).catch((error) =>
   console.log(error, "Error is coming back from the server")
   );
 }
 
+const setDisplays = () => {
+  welcome.innerHTML = `
+  <h1>Welcome, ${currentTraveler.returnFirstName()}!</h1>
+  `
+}
 const getCurrentTrip = () => {
   let tripByID = tripRepo.filterById(currentTraveler.id);
   return tripRepo.findCurrentTrip(tripByID, todaysDate);
