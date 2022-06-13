@@ -19,6 +19,7 @@ let upcomingButton = document.querySelector("#upcomingButton");
 let pastButton = document.querySelector("#pastButton");
 let pendingButton = document.querySelector("#pendingButton");
 let tripContainer = document.querySelector("#tripContainer");
+let welcome = document.querySelector("#welcome");
 
 // Global Variables
 let travelerRepo;
@@ -55,11 +56,18 @@ const fetchUserData = () => {
     destinationRepo = new DestinationRepo(destinations);
     currentTraveler = travelerRepo.data[37];
     paidVacations = tripRepo.getYearTotal(currentTraveler.id)
+    setDisplays();
   }).catch((error) =>
   console.log(error, "Error is coming back from the server")
   );
 }
 
+const setDisplays = () => {
+  welcome.innerHTML = `
+  <h1 class="welcome-user">Welcome, ${currentTraveler.returnFirstName()}!</h1>
+  <h3 class="welcome-total">You've spent: $${tripRepo.getYearTotal(currentTraveler.id)} this year.</h3>
+  `
+}
 const getCurrentTrip = () => {
   let tripByID = tripRepo.filterById(currentTraveler.id);
   return tripRepo.findCurrentTrip(tripByID, todaysDate);
@@ -69,17 +77,22 @@ const getCurrentTrip = () => {
 const displayCurrentTrip = (currentTrip) => {
   tripContainer.innerHTML = ``
   tripContainer.classList.add("center")
-  tripContainer.innerHTML = `
-  <section class="trip-box">
-  <h4> Date of Trip: ${currentTrip.date}<br>
-  Duration: ${currentTrip.duration} days<br>
-  Destination: ${currentTrip.destination.destination}<br>
-  Travelers: ${currentTrip.travelers} <br>
-  Status: ${currentTrip.status}<br>
-  Total Cost: $${calculateTripCost(currentTrip)}
-  </h4>
-  </section>
-  `
+  if(currentTrip){
+    tripContainer.innerHTML = `
+    <section class="trip-box">
+    <h4> Date of Trip: ${currentTrip.date}<br>
+    Duration: ${currentTrip.duration} days<br>
+    Destination: ${currentTrip.destination.destination}<br>
+    Travelers: ${currentTrip.travelers} <br>
+    Status: ${currentTrip.status}<br>
+    Total Cost: $${calculateTripCost(currentTrip)}
+    </h4>
+    </section>
+    `
+  }else{
+    tripContainer.innerHTML = `
+    <h2> Uh oh! You do not have a current trip!</h2> `
+  }
 };
 
 const getFutureTrips = () => {
