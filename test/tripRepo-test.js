@@ -55,7 +55,7 @@ describe("trip", () => {
         "travelers": 1,
         "date": "2022/09/16",
         "duration": 8,
-        "status": "approved",
+        "status": "pending",
         "suggestedActivities": []
       }, {
         "id": 2,
@@ -125,4 +125,10 @@ describe("trip", () => {
     expect(tripRepo.getYearTotal(43)).to.deep.equal(2596)
     expect(tripRepo.getYearTotal(42)).to.deep.equal(5214)
   });
+
+  it("Should get pending trips", () => {
+    let pendingTrip = [tripInstances[0]];
+
+    expect(tripRepo.filterPendingTrips(tripRepo.data, date)).to.deep.equal(pendingTrip);
+  })
 });

@@ -86,7 +86,7 @@ const trips = [
     "travelers": 1,
     "date": "2022/09/16",
     "duration": 8,
-    "status": "approved",
+    "status": "pending",
     "suggestedActivities": []
   },
   {
