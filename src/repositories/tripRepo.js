@@ -17,15 +17,19 @@ class TripRepo {
     return arr.find(trip => trip.currentTrip(date))
   }
 
-  filterPendingTrips(arr, date) {
-    return arr.filter(trip => trip.status == "pending")
-  }
-
-  filterById(travelerId) {
+  filterById(travelerId, status) {
     let filterId = this.data.filter((trip) => {
       return trip.userID == travelerId
     })
+    if(status) {
+      return this.filterByStatus(filterId, status)
+    }
     return filterId;
+  }
+
+  filterByStatus(arr, status) {
+    let filterId = arr.filter(trip => trip.status == status);
+    return filterId
   }
 
   filterByYear(trips, date) {
@@ -37,7 +41,7 @@ class TripRepo {
   }
 
   getPaidTrips(travelerId, date) {
-    let trips = this.filterById(travelerId);
+    let trips = this.filterById(travelerId, "approved");
     let pastAndCurrentTrips = this.filterPastTrips(trips, date);
     let currentTrip = this.findCurrentTrip(trips, date);
     if(currentTrip) {
