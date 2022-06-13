@@ -64,7 +64,8 @@ const fetchUserData = () => {
 
 const setDisplays = () => {
   welcome.innerHTML = `
-  <h1>Welcome, ${currentTraveler.returnFirstName()}!</h1>
+  <h1 class="welcome-user">Welcome, ${currentTraveler.returnFirstName()}!</h1>
+  <h3 class="welcome-total">You've spent: $${tripRepo.getYearTotal(currentTraveler.id)} this year.</h3>
   `
 }
 const getCurrentTrip = () => {
@@ -76,17 +77,22 @@ const getCurrentTrip = () => {
 const displayCurrentTrip = (currentTrip) => {
   tripContainer.innerHTML = ``
   tripContainer.classList.add("center")
-  tripContainer.innerHTML = `
-  <section class="trip-box">
-  <h4> Date of Trip: ${currentTrip.date}<br>
-  Duration: ${currentTrip.duration} days<br>
-  Destination: ${currentTrip.destination.destination}<br>
-  Travelers: ${currentTrip.travelers} <br>
-  Status: ${currentTrip.status}<br>
-  Total Cost: $${calculateTripCost(currentTrip)}
-  </h4>
-  </section>
-  `
+  if(currentTrip){
+    tripContainer.innerHTML = `
+    <section class="trip-box">
+    <h4> Date of Trip: ${currentTrip.date}<br>
+    Duration: ${currentTrip.duration} days<br>
+    Destination: ${currentTrip.destination.destination}<br>
+    Travelers: ${currentTrip.travelers} <br>
+    Status: ${currentTrip.status}<br>
+    Total Cost: $${calculateTripCost(currentTrip)}
+    </h4>
+    </section>
+    `
+  }else{
+    tripContainer.innerHTML = `
+    <h2> Uh oh! You do not have a current trip!</h2> `
+  }
 };
 
 const getFutureTrips = () => {
