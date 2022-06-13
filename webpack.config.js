@@ -1,13 +1,29 @@
-const path = require('path');
+const path = require('path'),
+HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   "mode": "none",
-  "entry": "./src/scripts.js",
-  "output": {
-    "path": __dirname + '/dist',
-    "filename": "bundle.js",
-    sourceMapFilename: "bundle.js.map"
+  "entry": {
+    index: "./src/scripts.js",
+    signin: "./src/signin.js"
   },
+  "output": {
+    "path": path.resolve(__dirname, '/dist'),
+    "filename": "[name].[contenthash].js",
+    // sourceMapFilename: "bundle.js.map"
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './dist/index.html',
+      chunks: ['index'],
+      filename: 'index.html'
+    }),
+    new HtmlWebpackPlugin({
+      template: './dist/signin.html',
+      chunks: ['signin'],
+      filename: 'signin.html'
+    })
+  ],
   devServer: {
     contentBase: path.join(__dirname, 'dist')
   },

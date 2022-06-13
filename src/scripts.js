@@ -8,7 +8,6 @@ import DestinationRepo from "./repositories/destinationRepo.js";
 import Destination from "./destination.js";
 import { getTodaysDate, calculateTripCost } from "./utils.js";
 
-import './css/signin.css';
 import './css/styles.css';
 
 //queryselectors
