@@ -127,26 +127,28 @@ const setTrip = (trip) => {
     <section class="trip-box" data-custom-open=>
     
     ${setTripModal(trip)}
-    <img src="${trip.destination.image}" class="trip-image" data-micromodal-trigger="modal-${trip.id}" id="viewTrip-${trip.id}">
+    <img src="${trip.destination.image}" tabindex="0" class="trip-image" data-micromodal-trigger="modal-${trip.id}" id="viewTrip-${trip.id}">
     </section>
   `
 }
 
 const setModalToggle = (trips) => {
   trips.forEach((trip) => {
-    document.querySelector(`#viewTrip-${trip.id}`).addEventListener("click", () => {
-      MicroModal.show(`modal-${trip.id}`, {
-        debugMode: true,
-        disableScroll: true
+    ["keypress", "click"].forEach((e) => {
+      document.querySelector(`#viewTrip-${trip.id}`).addEventListener(e, () => {
+        MicroModal.show(`modal-${trip.id}`, {
+          debugMode: true,
+          disableScroll: true
+        })
+      })
+  
+      document.querySelector(`#modalClose-${trip.id}`).addEventListener(e, (event) => {
+        event.preventDefault()
+        MicroModal.close(`modal-${trip.id}`)
       })
     })
-  
-    document.querySelector(`#modalClose-${trip.id}`).addEventListener("click", (event) => {
-      event.preventDefault()
-      MicroModal.close(`modal-${trip.id}`)
-    })
-
   })
+
 }
 
 const displayCurrentTrip = (currentTrip) => {
