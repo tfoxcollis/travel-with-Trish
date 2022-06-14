@@ -1,5 +1,5 @@
 import { getData, postData } from "./apiCalls.js";
-
+import MicroModal from 'micromodal';  // es6 module
 import TravelerRepo from "./repositories/travelerRepo";
 import Traveler from "../src/traveler";
 import TripRepo from "./repositories/tripRepo.js";
@@ -7,8 +7,13 @@ import Trip from "./trip.js";
 import DestinationRepo from "./repositories/destinationRepo.js";
 import Destination from "./destination.js";
 import { getTodaysDate, calculateTripCost } from "./utils.js";
-
+MicroModal.init({
+  openTrigger: 'data-custom-open',
+  disableScroll: true,
+  awaitCloseAnimation: false
+});
 import './css/styles.css';
+import './css/modal.css';
 
 //queryselectors
 let searchPage = document.querySelector("#searchPage");
@@ -96,21 +101,51 @@ const getCurrentTrip = () => {
 
 }
 
+const setTripModal = (trip) => {
+  return `
+  <div class="micromodal-slide modal" id="modal-${trip.id}" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-custom-close="">
+      <div class="modal__container w-40-ns w-90" role="dialog" aria-modal="true" aria-labelledby="modal-${trip.id}-title">
+        <header class="modal__header">
+          <button class="modal__close" id="modalClose-${trip.id}" aria-label="Close modal" data-custom-close=""></button>
+        </header>
+        <h4> Date of Trip: ${trip.date}<br>
+          Duration: ${trip.duration} days<br>
+          Destination: ${trip.destination.destination}<br>
+          Travelers: ${trip.travelers} <br>
+          Status: ${trip.status}<br>
+          Total Cost: $${calculateTripCost(trip)}
+        </h4>
+      </div>
+    </div>
+  </div>
+  `
+}
+
 const displayCurrentTrip = (currentTrip) => {
   tripContainer.innerHTML = ``
   tripContainer.classList.add("center")
+
   if(currentTrip){
     tripContainer.innerHTML = `
-    <section class="trip-box">
-    <h4> Date of Trip: ${currentTrip.date}<br>
-    Duration: ${currentTrip.duration} days<br>
-    Destination: ${currentTrip.destination.destination}<br>
-    Travelers: ${currentTrip.travelers} <br>
-    Status: ${currentTrip.status}<br>
-    Total Cost: $${calculateTripCost(currentTrip)}
-    </h4>
+    <section class="trip-box" data-custom-open=>
+    
+    ${setTripModal(currentTrip)}
+    <img src="${currentTrip.destination.image}" class="trip-image" data-micromodal-trigger="modal-${currentTrip.id}" id="viewTrip-${currentTrip.id}">
     </section>
     `
+
+    document.querySelector(`#viewTrip-${currentTrip.id}`).addEventListener("click", () => {
+      MicroModal.show(`modal-${currentTrip.id}`, {
+        debugMode: true,
+        disableScroll: true
+      })
+    })
+
+    document.querySelector(`#modalClose-${currentTrip.id}`).addEventListener("click", (event) => {
+      event.preventDefault()
+      MicroModal.close(`modal-${currentTrip.id}`)
+    })
   }else{
     tripContainer.innerHTML = `
     <h2> Uh oh! You do not have a current trip!</h2> `

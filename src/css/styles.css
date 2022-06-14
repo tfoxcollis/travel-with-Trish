@@ -4,7 +4,7 @@ body {
   letter-spacing: 1.5px;
 }
 
-header {
+.header {
   border: solid 1px black;
   height: 30%;
   display: flex;
@@ -115,6 +115,11 @@ button:active {
   margin: 1%;
 }
 
+.trip-image {
+  height: 250px;
+  width: 100%;
+}
+
 .search-button:hover{
   cursor: pointer;
 }
@@ -129,4 +134,8 @@ button:active {
 
 .center {
   justify-content: center;
+}
+
+.modal {
+  display: none;
 }
