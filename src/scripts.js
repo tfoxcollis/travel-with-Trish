@@ -83,6 +83,7 @@ const setDisplays = () => {
   welcome.innerHTML = `
   <h1 class="welcome-user">Welcome, ${currentTraveler.returnFirstName()}!</h1>
   <h2 class="welcome-total">You've spent: $${tripRepo.getYearTotal(currentTraveler.id)} this year.</h2>
+  <button class="signout-button" type="submit" id="signOut">Sign Out</button>
   `
   addRestrictionsToDateInput();
   populateDestinationsSelect();
