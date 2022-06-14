@@ -13,7 +13,7 @@ const validateUserName = (event) => {
 }
 
 const validatePassword = (event) => {
- if(!formPassword.value.includes("traveler")){
+ if(!(formPassword.value === "travel")){
    event.preventDefault();
    toggleErrorMessage();
  }
