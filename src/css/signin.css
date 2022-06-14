@@ -1,16 +1,15 @@
 body {
   --color-primary: #009579;
   --color-primary-dark: #007f67;
-  --color-secondary: #252c6a;
   --color-background: #ffffff;
   --color-error: #cc3333;
-  --color-success: #4bb544;
   --border-radius: 4px;
   margin: 0;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #656462;
   font-family: Arial, Helvetica, sans-serif;
   letter-spacing: 1.5px;
   font-size: 18px;
@@ -58,6 +57,7 @@ body {
   align-items: center;
   width: 100%;
   padding: 0.75rem;
+  font-size: 20px;
   box-sizing: border-box;
   border-radius: var(--border-radius);
   border: 1px solid #dddddd;
@@ -74,11 +74,12 @@ body {
 .form-button {
   width: 100%;
   padding: 1rem 2rem;
-  color: #ffffff;
+  /* color: #ffffff; */
   border: none;
   border-radius: var(--border-radius);
   outline: none;
   cursor: pointer;
+  font-size: 20px;
   background: var(--color-primary);
   }
 

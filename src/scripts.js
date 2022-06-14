@@ -150,7 +150,6 @@ const setModalToggle = (trips) => {
       })
     })
   })
-
 }
 
 const displayCurrentTrip = (currentTrip) => {
@@ -333,6 +332,17 @@ const watchForSignout = () => {
   });
 }
 
+const checkforMissingValues = (formData) => {
+  let missingValues = formData.filter((data) => {
+    if(!data.value) {
+      return true
+    }
+  })
+  if(missingValues.length > 0) {
+    return true
+  }
+}
+
 //eventlisteners
 
 window.addEventListener("load", () => {
@@ -366,6 +376,10 @@ pendingButton.addEventListener("click", (event) => {
 tripSubmit.addEventListener("click", (event) => {
   event.preventDefault();
   let formData = getFormData(event);
+  if(checkforMissingValues(formData)) {
+    alert("Please fill out all fields")
+    return;
+  }
   let destination = destinationRepo.data.find((destination) => {
     return destination.id == formData[3].value
   })
