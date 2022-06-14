@@ -7,20 +7,18 @@
   <title>Travel with Trish Sign-In</title>
 </head>
 <body>
-  <section class="body">
-    <section class="signin-container">
-      <form action="" class="form" id="login">
-        <h1 class="form-title">Login</h1>
-        <div class="form-message form-message-error">Incorrect username/password combination.</div>
-        <div class="form-input-group">
-          <input type="text" class="form__input" autofocus placeholder="Username"> 
-        </div>
-        <div class="form-input-group">
-          <input type="password" class="form__input" autofocus placeholder="Password"> 
-        </div>
-        <button class="form-button" type="submit">Continue</button>
-      </form>
-    </section>
+  <section class="container">
+    <form action="/" method="GET" class="form" id="login">
+      <h1 class="form-title">Login</h1>
+      <div class="form-message form-message-error">Incorrect username/password combination.</div>
+      <div class="form-input-group">
+        <input type="text" name="username" class="form__input" id="formUserName" autofocus placeholder="Username"> 
+      </div>
+      <div class="form-input-group">
+        <input type="password" class="form__input" id="formPassword" autofocus placeholder="Password"> 
+      </div>
+      <input class="form-button" id="signinButton" type="submit"></button>
+    </form>
   </section>
 </body> 
 </html>

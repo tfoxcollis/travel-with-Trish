@@ -8,7 +8,7 @@
   <title>Travel with Trish</title>
 </head>
 <body>
-  <header class="">
+  <header>
     <section class="welcome" id="welcome">
       <h1>Welcome, User</h1>
     </section>
@@ -21,26 +21,24 @@
     </ul>
   </header>
   <main class="main-box">
-    <section class="signed-in-container">
-      <section class="search-page" id="searchPage">
-        <section class="user-form" id="userForm">
-          <form action="" method="get">
-            <label for="date">Date</label>
-            <input type="date" name="date" id="date">
-            <label for="duration">Duration</label>
-            <input type="number" name="duration" id="duration" value="0">
-            <label for="travelers">Number of Travelers</label>
-            <input type="number" name="travelers" id="travelers" value="0"><br><br>
-            <label for="destinationID">Destination</label>
-            <select name="destinationID" id="destinationID"></select>
-            <input type="submit" value="search" id="tripSubmit">
-          </form>
-        </section>
-        <section class="selected-trip" id="selectedTrip">
-        </section>
+    <section class="search-page" id="searchPage">
+      <section class="user-form" id="userForm">
+        <form action="" method="get">
+          <label for="date">Date</label>
+          <input type="date" name="date" id="date">
+          <label for="duration">Duration</label>
+          <input type="number" name="duration" id="duration" value="0">
+          <label for="travelers">Number of Travelers</label>
+          <input type="number" name="travelers" id="travelers" value="0"><br><br>
+          <label for="destinationID">Destination</label>
+          <select name="destinationID" id="destinationID"></select>
+          <input type="submit" value="search" id="tripSubmit">
+        </form>
       </section>
-      <section class="trip-container hidden" id="tripContainer">
+      <section class="selected-trip" id="selectedTrip">
       </section>
+    </section>
+    <section class="trip-container hidden" id="tripContainer">
     </section>
   </main> 
   <script src="bundle.js"></script>
