@@ -81,18 +81,6 @@ const createDataArrays = (data) => {
   });
 }
 
-const populateDestinationsSelect = () => {
-  destinationRepo.data.forEach((destination) => {
-    destinationsSelect.innerHTML += `
-    <option value="${destination.id}">${destination.destination}</option>`
-  })
-};
-
-const addRestrictionsToDateInput = () => {
-  let date = userForm.querySelector("#date");
-  date.setAttribute("min", todaysDate.split("/").join("-"));
-};
-
 const setDisplays = () => {
   welcome.innerHTML = `
   <h1 class="welcome-user">Welcome, ${currentTraveler.returnFirstName()}!</h1>
@@ -102,16 +90,31 @@ const setDisplays = () => {
   </div>
   `
   addRestrictionsToDateInput();
-  populateDestinationsSelect();
-  
+  addOptionsToDestinationsDropdown();
   watchForSignout();
 }
-const getCurrentTrip = () => {
-  let tripByID = tripRepo.filterById(currentTraveler.id, "approved");
-  return tripRepo.findCurrentTrip(tripByID, todaysDate);
 
+const addRestrictionsToDateInput = () => {
+  let date = userForm.querySelector("#date");
+  date.setAttribute("min", todaysDate.split("/").join("-"));
+};
+
+const addOptionsToDestinationsDropdown = () => {
+  destinationRepo.data.forEach((destination) => {
+    destinationsSelect.innerHTML += `
+    <option value="${destination.id}">${destination.destination}</option>`
+  })
+};
+
+const watchForSignout = () => {
+  let signoutButton = document.querySelector("#signOut");
+  signoutButton.addEventListener("click", () => {
+    window.location.href = "http://localhost:8080";
+  });
 }
 
+
+// Functions for the Trip Modals
 const setTripModal = (trip) => {
   return `
   <div class="micromodal-slide modal" id="modal-${trip.id}" aria-hidden="true">
@@ -161,10 +164,14 @@ const setModalToggle = (trips) => {
   })
 }
 
+const getCurrentTrip = () => {
+  let tripByID = tripRepo.filterById(currentTraveler.id, "approved");
+  return tripRepo.findCurrentTrip(tripByID, todaysDate);
+}
+
 const displayCurrentTrip = (currentTrip) => {
   tripContainer.innerHTML = ``
   tripContainer.classList.add("center")
-
   if(currentTrip){
     tripContainer.innerHTML = setTrip(currentTrip);
     setModalToggle([currentTrip]);
@@ -332,13 +339,6 @@ const checkIfSignedIn = () => {
   if(!currentTraveler) {
     window.location.replace("http://localhost:8080/signin.html")
   }
-}
-
-const watchForSignout = () => {
-  let signoutButton = document.querySelector("#signOut");
-  signoutButton.addEventListener("click", () => {
-    window.location.href = "http://localhost:8080";
-  });
 }
 
 const checkforMissingValues = (formData) => {
