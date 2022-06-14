@@ -73,6 +73,7 @@ button {
 
 button:hover {
   cursor: pointer;
+  transform: scale(1.03);
 }
 
 button:active {
@@ -109,6 +110,7 @@ button:active {
 }
 
 .image-preview {
+  border: solid 4px black;
   width: 40%;
 }
 
@@ -135,6 +137,7 @@ button:active {
 
 .search-button:hover{
   cursor: pointer;
+  transform: scale(1.03);
 }
 
 .search-button:active {
@@ -155,4 +158,9 @@ p {
 
 .modal {
   display: none;
+}
+
+.trip-image:hover{
+  cursor: pointer;
+  transform: scale(1.01);
 }
