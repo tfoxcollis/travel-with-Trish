@@ -36,7 +36,7 @@ Travel with Trish is a site that allows users to sign in to view and book trips.
 
 ## Wins:
 - Creating a separate login page
-- Working with multiple files that were 
+- Writing semantic HTML help with accessability 
 - Implementing micromodal.js
 - Organizing the layout of the scripts.js file to help
 
