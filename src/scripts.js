@@ -1,5 +1,5 @@
+// Import required classes
 import { getData, postData } from "./apiCalls.js";
-import MicroModal from 'micromodal';  // es6 module
 import TravelerRepo from "./repositories/travelerRepo";
 import Traveler from "../src/traveler";
 import TripRepo from "./repositories/tripRepo.js";
@@ -7,11 +7,16 @@ import Trip from "./trip.js";
 import DestinationRepo from "./repositories/destinationRepo.js";
 import Destination from "./destination.js";
 import { getTodaysDate, calculateTripCost } from "./utils.js";
+
+// import and initialize MicroModal
+import MicroModal from 'micromodal';
 MicroModal.init({
   openTrigger: 'data-custom-open',
   disableScroll: true,
   awaitCloseAnimation: false
 });
+
+// Import css
 import './css/styles.css';
 import './css/modal.css';
 
@@ -30,6 +35,9 @@ let destinationsSelect = document.querySelector("#destinationID");
 let tripSubmit = document.querySelector("#tripSubmit");
 
 // Global Variables
+let travelers;
+let destinations;
+let trips;
 let travelerRepo;
 let tripRepo;
 let destinationRepo;
@@ -40,26 +48,14 @@ let todaysDate = getTodaysDate();
 
 //functions
 
+// Fetch all data
 const fetchUserData = () => {
   Promise.all([
-    getData("travelers"),
+    getData("traveler"),
     getData("destinations"),
     getData("trips")
   ]).then((data) => {
-
-    let travelers = data[0].travelers.map((traveler) => {
-      return new Traveler(traveler);
-    });
-
-    let destinations = data[1].destinations.map((destination) => {
-      return new Destination(destination);
-    });
-
-    let trips = data[2].trips.map((trip) => {
-      let destination = destinations.find(destination => destination.id == trip.destinationID)
-      return new Trip(trip, destination);
-    });
-
+    createDataArrays(data);
     travelerRepo = new TravelerRepo(travelers);
     checkIfSignedIn();
     tripRepo = new TripRepo(trips);
@@ -67,15 +63,28 @@ const fetchUserData = () => {
     paidVacations = tripRepo.getYearTotal(currentTraveler.id)
     setDisplays();
   }).catch((error) =>
-  console.log(error, "Error is coming back from the server")
+    alert(error)
   );
 };
+
+// Create array from resolved Promise
+const createDataArrays = (data) => {
+  travelers = data[0].travelers.map((traveler) => {
+    return new Traveler(traveler);
+  });
+  destinations = data[1].destinations.map((destination) => {
+    return new Destination(destination);
+  });
+  trips = data[2].trips.map((trip) => {
+    let destination = destinations.find(destination => destination.id == trip.destinationID)
+    return new Trip(trip, destination);
+  });
+}
 
 const populateDestinationsSelect = () => {
   destinationRepo.data.forEach((destination) => {
     destinationsSelect.innerHTML += `
     <option value="${destination.id}">${destination.destination}</option>`
-
   })
 };
 
