@@ -9,7 +9,6 @@ import Destination from "./destination.js";
 import { getTodaysDate, calculateTripCost } from "./utils.js";
 
 import './css/styles.css';
-import './images/turing-logo.png'
 
 //queryselectors
 let searchPage = document.querySelector("#searchPage");
@@ -57,9 +56,9 @@ const fetchUserData = () => {
     });
 
     travelerRepo = new TravelerRepo(travelers);
+    checkIfSignedIn();
     tripRepo = new TripRepo(trips);
     destinationRepo = new DestinationRepo(destinations);
-    currentTraveler = travelerRepo.data[37];
     paidVacations = tripRepo.getYearTotal(currentTraveler.id)
     setDisplays();
   }).catch((error) =>
@@ -287,6 +286,20 @@ const displaySelectedTripToBook = (formData, destination) => {
   })
 
 };
+
+const checkIfSignedIn = () => {
+  let params = new URLSearchParams(window.location.search);
+  let userID = params.get('username')?.split('')?.splice(8,5)?.join('');
+  if(userID) {
+    let traveler = travelerRepo.data.find(traveler => traveler.id == userID)
+    if(traveler) {
+      currentTraveler = traveler
+    }
+  }
+  if(!currentTraveler) {
+    window.location.replace("http://localhost:8080/signin.html")
+  }
+}
 
 //eventlisteners
 
