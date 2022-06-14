@@ -4,7 +4,6 @@ import TravelerRepo from "./repositories/travelerRepo";
 import Traveler from "../src/traveler";
 import TripRepo from "./repositories/tripRepo.js";
 import Trip from "./trip.js";
-import DestinationRepo from "./repositories/destinationRepo.js";
 import Destination from "./destination.js";
 import { getTodaysDate, calculateTripCost } from "./utils.js";
 
@@ -40,7 +39,6 @@ let destinations;
 let trips;
 let travelerRepo;
 let tripRepo;
-let destinationRepo;
 let currentTraveler;
 let paidVacations;
 let potentialTrip;
@@ -57,11 +55,11 @@ const fetchUserData = () => {
   ]).then((data) => {
     createDataArrays(data);
     travelerRepo = new TravelerRepo(travelers);
-    checkIfSignedIn();
-    tripRepo = new TripRepo(trips);
-    destinationRepo = new DestinationRepo(destinations);
-    paidVacations = tripRepo.getYearTotal(currentTraveler.id)
-    setDisplays();
+    if(checkIfSignedIn()){
+      tripRepo = new TripRepo(trips);
+      paidVacations = tripRepo.getYearTotal(currentTraveler.id)
+      setWelcomeDisplay();
+    };
   }).catch((error) =>
     alert(error)
   );
@@ -81,7 +79,7 @@ const createDataArrays = (data) => {
   });
 }
 
-const setDisplays = () => {
+const setWelcomeDisplay = () => {
   welcome.innerHTML = `
   <h1 class="welcome-user">Welcome, ${currentTraveler.returnFirstName()}!</h1>
   <div class="welcome-right">
@@ -100,7 +98,7 @@ const addRestrictionsToDateInput = () => {
 };
 
 const addOptionsToDestinationsDropdown = () => {
-  destinationRepo.data.forEach((destination) => {
+  destinations.forEach((destination) => {
     destinationsSelect.innerHTML += `
     <option value="${destination.id}">${destination.destination}</option>`
   })
@@ -136,6 +134,25 @@ const setTripModal = (trip) => {
   `
 }
 
+const setModalToggle = (trips) => {
+  trips.forEach((trip) => {
+    ["keypress", "click"].forEach((e) => {
+      document.querySelector(`#viewTrip-${trip.id}`).addEventListener(e, () => {
+        MicroModal.show(`modal-${trip.id}`, {
+          debugMode: true,
+          disableScroll: true
+        })
+      })
+      
+      document.querySelector(`#modalClose-${trip.id}`).addEventListener(e, (event) => {
+        event.preventDefault()
+        MicroModal.close(`modal-${trip.id}`)
+      })
+    })
+  })
+}
+
+// functions for finding/displaying trips
 const setTrip = (trip) => {
   return `
     <section class="trip-box" data-custom-open=>
@@ -146,24 +163,6 @@ const setTrip = (trip) => {
   `
 }
 
-const setModalToggle = (trips) => {
-  trips.forEach((trip) => {
-    ["keypress", "click"].forEach((e) => {
-      document.querySelector(`#viewTrip-${trip.id}`).addEventListener(e, () => {
-        MicroModal.show(`modal-${trip.id}`, {
-          debugMode: true,
-          disableScroll: true
-        })
-      })
-  
-      document.querySelector(`#modalClose-${trip.id}`).addEventListener(e, (event) => {
-        event.preventDefault()
-        MicroModal.close(`modal-${trip.id}`)
-      })
-    })
-  })
-}
-
 const getCurrentTrip = () => {
   let tripByID = tripRepo.filterById(currentTraveler.id, "approved");
   return tripRepo.findCurrentTrip(tripByID, todaysDate);
@@ -171,13 +170,11 @@ const getCurrentTrip = () => {
 
 const displayCurrentTrip = (currentTrip) => {
   tripContainer.innerHTML = ``
-  tripContainer.classList.add("center")
   if(currentTrip){
     tripContainer.innerHTML = setTrip(currentTrip);
     setModalToggle([currentTrip]);
   }else{
-    tripContainer.innerHTML = `
-    <h2> Uh oh! You do not have a current trip!</h2> `
+    tripContainer.innerHTML = `<h2> Uh oh! You do not have a current trip!</h2> `
   }
 };
 
@@ -191,13 +188,9 @@ const displayUpcomingTrips = (upcomingTrips) => {
   if(upcomingTrips.length == 0){
     tripContainer.innerHTML = `
      <h2>You do not currently have any approved upcoming trips.<br>
-    Check to see if any trip is pending.</h2>
-    `
-    tripContainer.classList.add("center")
+     Check to see if any trip is pending.</h2>`
     return
   }
-  tripContainer.classList.remove("center")
-
   upcomingTrips.forEach((trip) => {
     tripContainer.innerHTML += setTrip(trip);
   });
@@ -209,17 +202,13 @@ const getPastTrips = () => {
   return tripRepo.filterPastTrips(tripByID, todaysDate);
 }
 
-const displayPastTrips = (pastTrips) => {
+const displayPastTrips = () => {
+  let pastTrips = getPastTrips();
   tripContainer.innerHTML = ``;
   if(pastTrips.length == 0){
-    tripContainer.innerHTML = `
-     <h2>You do not currently have past trips.</h2>
-    `
-    tripContainer.classList.add("center")
+    tripContainer.innerHTML = `<h2>You do not currently have past trips.</h2>`
     return
   }
-  tripContainer.classList.remove("center")
-
   pastTrips.forEach((trip) => {
     tripContainer.innerHTML += setTrip(trip);
   });
@@ -231,16 +220,13 @@ const getPendingTrips = (pendingTrips) => {
   return tripRepo.filterByStatus(tripByID, "pending");
 }
 
-const displayPendingTrips = (pendingTrips) => {
+const displayPendingTrips = () => {
+  let pendingTrips = getPendingTrips();
   tripContainer.innerHTML = ``;
   if(pendingTrips.length == 0){
-    tripContainer.innerHTML = `
-     <h2>You do not currently have pending trips.</h2>
-    `
-    tripContainer.classList.add("center")
+    tripContainer.innerHTML = `<h2>You do not currently have pending trips.</h2>`
     return
   }
-  tripContainer.classList.remove("center")
 
   pendingTrips.forEach((trip) => {
     tripContainer.innerHTML += setTrip(trip)
@@ -258,6 +244,7 @@ const toggleDisplay = (event) => {
   }
 };
 
+// functions for searching/booking trip
 const getFormData = (event) => {
   let form = event.target.closest("form");
   let inputs = Array.from(form.querySelectorAll("input"));
@@ -267,6 +254,17 @@ const getFormData = (event) => {
     return {name: input.name, value: input.value}
   });
 };
+
+const checkforMissingValues = (formData) => {
+  let missingValues = formData.filter((data) => {
+    if(!data.value) {
+      return true
+    }
+  })
+  if(missingValues.length > 0) {
+    return true
+  }
+}
 
 const createNewTrip = (formData, destination) => {
   let id = tripRepo.data.length + 1
@@ -306,7 +304,6 @@ const resetSearchPage = () => {
       input.value = '';
     }
   })
-
   selectedTrip.innerHTML = ''
 }
 
@@ -332,43 +329,33 @@ const displaySelectedTripToBook = (formData, destination) => {
 };
 
 const checkIfSignedIn = () => {
-  let params = new URLSearchParams(window.location.search);
-  let userID = params.get('username')?.split('')?.splice(8,5)?.join('');
+  let urlParams = new URLSearchParams(window.location.search);
+  let userID = urlParams.get('username')?.split('')?.splice(8,5)?.join('');
   if(userID) {
     let traveler = travelerRepo.data.find(traveler => traveler.id == userID)
     if(traveler) {
       currentTraveler = traveler
     }
+    return true
   }
   if(!currentTraveler) {
     window.location.replace("http://localhost:8080/signin.html")
-  }
-}
-
-const checkforMissingValues = (formData) => {
-  let missingValues = formData.filter((data) => {
-    if(!data.value) {
-      return true
-    }
-  })
-  if(missingValues.length > 0) {
-    return true
+    return false
   }
 }
 
 //eventlisteners
-
 window.addEventListener("load", () => {
   fetchUserData();
 })
 
+searchButton.addEventListener("click", (event) => {
+  toggleDisplay(event)
+});
+
 currentButton.addEventListener("click", (event) => {
   toggleDisplay(event)
   displayCurrentTrip(getCurrentTrip());
-});
-
-searchButton.addEventListener("click", (event) => {
-  toggleDisplay(event)
 });
 
 upcomingButton.addEventListener("click", (event) => {
@@ -378,12 +365,12 @@ upcomingButton.addEventListener("click", (event) => {
 
 pastButton.addEventListener("click", (event) => {
   toggleDisplay(event);
-  displayPastTrips(getPastTrips());
+  displayPastTrips();
 });
 
 pendingButton.addEventListener("click", (event) => {
   toggleDisplay(event);
-  displayPendingTrips(getPendingTrips());
+  displayPendingTrips();
 })
 
 tripSubmit.addEventListener("click", (event) => {
@@ -393,7 +380,7 @@ tripSubmit.addEventListener("click", (event) => {
     alert("Please fill out all fields")
     return;
   }
-  let destination = destinationRepo.data.find((destination) => {
+  let destination = destinations.find((destination) => {
     return destination.id == formData[3].value
   })
   displaySelectedTripToBook(formData, destination);
