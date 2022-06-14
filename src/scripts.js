@@ -87,6 +87,8 @@ const setDisplays = () => {
   `
   addRestrictionsToDateInput();
   populateDestinationsSelect();
+  
+  watchForSignout();
 }
 const getCurrentTrip = () => {
   let tripByID = tripRepo.filterById(currentTraveler.id, "approved");
@@ -300,6 +302,13 @@ const checkIfSignedIn = () => {
   if(!currentTraveler) {
     window.location.replace("http://localhost:8080/signin.html")
   }
+}
+
+const watchForSignout = () => {
+  let signoutButton = document.querySelector("#signOut");
+  signoutButton.addEventListener("click", () => {
+    window.location.href = "http://localhost:8080";
+  });
 }
 
 //eventlisteners
