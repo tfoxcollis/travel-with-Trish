@@ -2,7 +2,6 @@ body {
   height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
   letter-spacing: 1.5px;
-  /* background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%); */
 }
 
 header {
@@ -27,6 +26,11 @@ header {
 .welcome-total {
   margin-right: 2%;
   font-size: 25px;
+  
+}
+
+.signout-button {
+  height: 30px;
 }
 
 ul.navbar {
@@ -54,8 +58,13 @@ button {
   font-size: 20px;
   margin-bottom: 5px;
 }
+
 button:hover {
   cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.90);
 }
 
 .search-page {
@@ -92,19 +101,28 @@ button:hover {
 }
 
 .trip-container {
-  border: solid 2px purple;
   width: 80%;
   display: flex;
   flex-wrap: wrap;
   overflow-y: auto;
 
 }
+
 .trip-box {
   border: solid 2px black;
   height: 250px;
   width: 30%;
   margin: 1%;
 }
+
+.search-button:hover{
+  cursor: pointer;
+}
+
+.search-button:active {
+  transform: scale(0.90);
+}
+
 .hidden {
   display: none;
 }

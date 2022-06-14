@@ -2,6 +2,7 @@ body {
   --color-primary: #009579;
   --color-primary-dark: #007f67;
   --color-secondary: #252c6a;
+  --color-background: #ffffff;
   --color-error: #cc3333;
   --color-success: #4bb544;
   --border-radius: 4px;
@@ -10,8 +11,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 1.5px;
   font-size: 18px;
-  background: var(--color-primary);
  }
 
 .container {
@@ -21,7 +23,7 @@ body {
   padding: 2rem;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
   border-radius: var(--border-radius);
-  background: #ffffff;
+  background: var(--color-background)
 }
 
 .login {
@@ -66,7 +68,7 @@ body {
 
 .form-input:focus {
   border-color: var(--color-primary);
-  background: #ffffff;
+  background: var(--color-background)
 }
 
 .form-button {
@@ -86,4 +88,8 @@ body {
 
  .form-button:active {
    transform: scale(0.98);
+ }
+
+ .hidden {
+   display: none;
  }
