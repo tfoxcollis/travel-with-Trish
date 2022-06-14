@@ -51,7 +51,7 @@ let todaysDate = getTodaysDate();
 // Fetch all data
 const fetchUserData = () => {
   Promise.all([
-    getData("traveler"),
+    getData("travelers"),
     getData("destinations"),
     getData("trips")
   ]).then((data) => {
@@ -109,7 +109,7 @@ const addOptionsToDestinationsDropdown = () => {
 const watchForSignout = () => {
   let signoutButton = document.querySelector("#signOut");
   signoutButton.addEventListener("click", () => {
-    window.location.href = "http://localhost:8080";
+    window.location.href = "http://localhost:8080/signin.html";
   });
 }
 
@@ -315,8 +315,12 @@ const displaySelectedTripToBook = (formData, destination) => {
   selectedTrip.innerHTML = `
     <img class="image-preview" src="${destination.image} alt="${destination.alt}">
     <article>
-      <h3>Estimated Cost: $${calculateTripCost(potentialTrip)}</h3>
+      <h3>
+      Lodging: $${destination.lodgingPerDay} per person/night<br>
+      Flight: $${destination.flightCostPerPerson} per person<br><br>
+      Estimated Total Cost: $${calculateTripCost(potentialTrip)}*</h3><br>
       <button class="book-now" id="bookNow">Book</button>
+      <p>*This includes a 10% agent booking fee</p>
     </article>
   `
   selectedTrip.querySelector("#bookNow").addEventListener("click", (event) => {

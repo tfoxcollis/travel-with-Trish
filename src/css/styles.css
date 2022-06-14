@@ -149,6 +149,10 @@ button:active {
   justify-content: center;
 }
 
+p {
+  font-size: 10px;
+}
+
 .modal {
   display: none;
 }
