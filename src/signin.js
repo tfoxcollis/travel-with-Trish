@@ -12,9 +12,12 @@ const validateUserName = (event) => {
   }
 }
 
-// const validatePassword = () => {
-
-// }
+const validatePassword = (event) => {
+ if(!formPassword.value.includes("traveler")){
+   event.preventDefault();
+   toggleErrorMessage();
+ }
+}
 
 const toggleErrorMessage = (event) => {
   let errorMessage = document.querySelector(".form-message-error");
@@ -23,5 +26,5 @@ const toggleErrorMessage = (event) => {
 
 signinButton.addEventListener("click", (event) => {
   validateUserName(event);
-  validatePassword();
+  validatePassword(event);
 })
