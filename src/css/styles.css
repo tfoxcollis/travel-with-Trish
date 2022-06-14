@@ -4,7 +4,7 @@ body {
   letter-spacing: 1.5px;
 }
 
-header {
+.header {
   border: solid 1px black;
   height: 30%;
   display: flex;
@@ -14,13 +14,23 @@ header {
 
 .welcome {
   font-size: 30px;
-  text-align: center;
+  height: 100%;
+  padding-top: 20px;
+  /* text-align: center; */
   display: flex;
   justify-content: space-between
 }
 
 .welcome-user{
   margin-left: 2%;
+}
+
+.welcome-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  min-width: 40%;
 }
 
 .welcome-total {
@@ -30,7 +40,10 @@ header {
 }
 
 .signout-button {
+  /* align-self: flex-end; */
   height: 30px;
+  margin-right: 15px;
+  margin-top: 0px;
 }
 
 ul.navbar {
@@ -103,16 +116,22 @@ button:active {
 .trip-container {
   width: 80%;
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   overflow-y: auto;
 
 }
 
 .trip-box {
-  border: solid 2px black;
+  border: solid 4px black;
   height: 250px;
   width: 30%;
   margin: 1%;
+}
+
+.trip-image {
+  height: 250px;
+  width: 100%;
 }
 
 .search-button:hover{
@@ -129,4 +148,8 @@ button:active {
 
 .center {
   justify-content: center;
+}
+
+.modal {
+  display: none;
 }
