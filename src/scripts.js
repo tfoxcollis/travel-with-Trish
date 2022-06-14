@@ -122,30 +122,40 @@ const setTripModal = (trip) => {
   `
 }
 
+const setTrip = (trip) => {
+  return `
+    <section class="trip-box" data-custom-open=>
+    
+    ${setTripModal(trip)}
+    <img src="${trip.destination.image}" class="trip-image" data-micromodal-trigger="modal-${trip.id}" id="viewTrip-${trip.id}">
+    </section>
+  `
+}
+
+const setModalToggle = (trips) => {
+  trips.forEach((trip) => {
+    document.querySelector(`#viewTrip-${trip.id}`).addEventListener("click", () => {
+      MicroModal.show(`modal-${trip.id}`, {
+        debugMode: true,
+        disableScroll: true
+      })
+    })
+  
+    document.querySelector(`#modalClose-${trip.id}`).addEventListener("click", (event) => {
+      event.preventDefault()
+      MicroModal.close(`modal-${trip.id}`)
+    })
+
+  })
+}
+
 const displayCurrentTrip = (currentTrip) => {
   tripContainer.innerHTML = ``
   tripContainer.classList.add("center")
 
   if(currentTrip){
-    tripContainer.innerHTML = `
-    <section class="trip-box" data-custom-open=>
-    
-    ${setTripModal(currentTrip)}
-    <img src="${currentTrip.destination.image}" class="trip-image" data-micromodal-trigger="modal-${currentTrip.id}" id="viewTrip-${currentTrip.id}">
-    </section>
-    `
-
-    document.querySelector(`#viewTrip-${currentTrip.id}`).addEventListener("click", () => {
-      MicroModal.show(`modal-${currentTrip.id}`, {
-        debugMode: true,
-        disableScroll: true
-      })
-    })
-
-    document.querySelector(`#modalClose-${currentTrip.id}`).addEventListener("click", (event) => {
-      event.preventDefault()
-      MicroModal.close(`modal-${currentTrip.id}`)
-    })
+    tripContainer.innerHTML = setTrip(currentTrip);
+    setModalToggle([currentTrip]);
   }else{
     tripContainer.innerHTML = `
     <h2> Uh oh! You do not have a current trip!</h2> `
@@ -170,18 +180,9 @@ const displayUpcomingTrips = (upcomingTrips) => {
   tripContainer.classList.remove("center")
 
   upcomingTrips.forEach((trip) => {
-    tripContainer.innerHTML += `
-    <section class="trip-box">
-      <h4> Date of Trip: ${trip.date}<br>
-      Duration: ${trip.duration} days<br>
-      Destination: ${trip.destination.destination}<br>
-      Travelers: ${trip.travelers} <br>
-      Status: ${trip.status}<br>
-      Total Cost: $${calculateTripCost(trip)}
-      </h4>
-    </section>
-    `
+    tripContainer.innerHTML += setTrip(trip);
   });
+  return setModalToggle(upcomingTrips);
 }
 
 const getPastTrips = () => {
@@ -201,18 +202,9 @@ const displayPastTrips = (pastTrips) => {
   tripContainer.classList.remove("center")
 
   pastTrips.forEach((trip) => {
-    tripContainer.innerHTML += `
-    <section class="trip-box">
-      <h4> Date of Trip: ${trip.date}<br>
-      Duration: ${trip.duration} days<br>
-      Destination: ${trip.destination.destination}<br>
-      Travelers: ${trip.travelers} <br>
-      Status: ${trip.status}<br>
-      Total Cost: $${calculateTripCost(trip)}
-      </h4>
-    </section>
-    `
+    tripContainer.innerHTML += setTrip(trip);
   });
+  return setModalToggle(pastTrips);
 }
 
 const getPendingTrips = (pendingTrips) => {
@@ -232,18 +224,9 @@ const displayPendingTrips = (pendingTrips) => {
   tripContainer.classList.remove("center")
 
   pendingTrips.forEach((trip) => {
-    tripContainer.innerHTML += `
-    <section class="trip-box">
-      <h4> Date of Trip: ${trip.date}<br>
-      Duration: ${trip.duration} days<br>
-      Destination: ${trip.destination.destination}<br>
-      Travelers: ${trip.travelers} <br>
-      Status: ${trip.status}<br>
-      Total Cost: $${calculateTripCost(trip)}
-      </h4>
-    </section>
-    `
+    tripContainer.innerHTML += setTrip(trip)
   });
+  return setModalToggle(pendingTrips);
 };
 
 const toggleDisplay = (event) => {
