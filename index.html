@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="description" content="Book Now! Travel Planner" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel with Trish</title>
+<script defer src="index.52569bffafd083c116c0.js"></script><script defer src="index.52569bffafd083c116c0.js"></script></head>
+<body>
+  <header class="header">
+    <section class="welcome" id="welcome"></section>
+    <ul class="navbar">
+      <li><button type="submit" id="searchButton">Search</button></li>
+      <li><button type="submit" id="currentButton">Current</button></li>
+      <li><button type="submit" id="upcomingButton">Upcoming</button></li>
+      <li><button type="submit" id="pastButton">Past</button></li>
+      <li><button type="submit" id="pendingButton">Pending</button></li>
+    </ul>
+  </header>
+  <main class="main-box">
+    <section class="search-page" id="searchPage">
+      <section class="user-form" id="userForm">
+        <form action="" method="get">
+          <label for="date">Date</label>
+          <input type="date" name="date" id="date">
+          <label for="duration">Duration</label>
+          <input type="number" name="duration" id="duration" value="0">
+          <label for="travelers">Number of Travelers</label>
+          <input type="number" name="travelers" id="travelers" value="0"><br><br>
+          <label for="destinationID">Destination</label>
+          <select name="destinationID" id="destinationID"></select>
+          <input class="search-button" type="submit" value="search" id="tripSubmit">
+        </form>
+      </section>
+      <section class="selected-trip" id="selectedTrip">
+      </section>
+    </section>
+    <section class="trip-container hidden" id="tripContainer">
+    </section>
+  </main> 
+  <script src="bundle.js"></script>
+</body>
+</html>
