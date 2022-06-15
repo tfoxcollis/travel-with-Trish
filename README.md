@@ -10,6 +10,8 @@ Travel with Trish is a site that allows users to sign in to view and book trips.
 
 ## Example of Project:
 
+![Demo of Project](./travelWithTrish.gif)
+
 ## Goals:
 
 - Implement ES6 classes
