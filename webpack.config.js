@@ -8,9 +8,9 @@ module.exports = {
     signin: "./src/signin.js"
   },
   "output": {
-    "path": path.resolve(__dirname, '/dist'),
+    "path": path.resolve(__dirname, 'dist'),
     "filename": "[name].[contenthash].js",
-    // sourceMapFilename: "bundle.js.map"
+    sourceMapFilename: "[name].bundle.js.map"
   },
   plugins: [
     new HtmlWebpackPlugin({
