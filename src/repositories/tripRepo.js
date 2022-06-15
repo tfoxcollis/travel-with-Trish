@@ -59,9 +59,6 @@ class TripRepo {
     }, 0);
     return totalExpenses;
   }
-
-  
-
 }
 
 export default TripRepo;
