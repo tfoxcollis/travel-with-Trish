@@ -258,13 +258,21 @@ const getFormData = (event) => {
   });
 };
 
-const checkforMissingValues = (formData) => {
-  let missingValues = formData.filter((data) => {
-    if (!data.value) {
-      return true
+const checkforMissingOrInvalidValues = (formData) => {
+  let missingValues = formData.filter(data => !data.value)
+  let invalidValues;
+  invalidValues = formData.filter((data) => {
+    if (data.name === 'date') {
+      if (data.value.split('-').join('/') <= todaysDate) {
+        return true
+      }
+    } else {
+      if (parseInt(data.value) < 0) {
+        return true
+      }
     }
   })
-  if (missingValues.length > 0) {
+  if (missingValues.length > 0 || invalidValues.length > 0) {
     return true
   }
 }
@@ -384,8 +392,8 @@ pendingButton.addEventListener("click", (event) => {
 tripSubmit.addEventListener("click", (event) => {
   event.preventDefault();
   let formData = getFormData(event);
-  if (checkforMissingValues(formData)) {
-    alert("Please fill out all fields")
+  if (checkforMissingOrInvalidValues(formData)) {
+    alert("Please check field values, and try again.")
     return;
   }
   let destination = destinations.find((destination) => {
