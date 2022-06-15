@@ -332,7 +332,11 @@ const displaySelectedTripToBook = (formData, destination) => {
 
 const checkIfSignedIn = () => {
   let urlParams = new URLSearchParams(window.location.search);
-  let userID = urlParams.get('username').split('').splice(8, 5).join('');
+  let userName = urlParams.get('username')
+  let userID
+  if (userName) {
+    userID = userName.split('').splice(8, 5).join('');
+  }
   if (userID) {
     let traveler = travelerRepo.data.find((traveler) => {
       return traveler.id === parseInt(userID)
