@@ -31,11 +31,13 @@ describe("Destination", () => {
     });
 
     it("Should have an image src", () => {
-      expect(destination1.image).to.equal("https://images.unsplash.com/photo-1524478075552-c2763ea171b8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80");
+      expect(destination1.image)
+        .to.equal("https://images.unsplash.com/photo-1524478075552-c2763ea171b8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80");
     });
 
     it("Should have alt text for image", () => {
-      expect(destination1.alt).to.equal("aerial photography of rocky mountain under cloudy sky");
+      expect(destination1.alt)
+        .to.equal("aerial photography of rocky mountain under cloudy sky");
     });
   });
 });
