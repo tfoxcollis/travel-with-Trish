@@ -13,4 +13,14 @@ describe("Traveler Repo", () => {
     let findTraveler = travelerInstances[0]
     expect(travelerRepo.findById(1)).to.deep.equal(findTraveler)
   })
+
+  it("Should return error if no id is passed in", () => {
+    let errorMessage = "Oops it looks like no id was passed in";
+    expect(travelerRepo.findById()).to.equal(errorMessage)
+  });
+
+  it("Should return error is traveler is not found", () => {
+    let errorMessage = "Traveler not found";
+    expect(travelerRepo.findById(5000)).to.equal(errorMessage);
+  });
 });
