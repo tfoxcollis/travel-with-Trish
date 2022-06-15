@@ -6,20 +6,20 @@ let formUserName = document.querySelector("#formUserName");
 let formPassword = document.querySelector("#formPassword");
 
 const validateUserName = (event) => {
-  if(!formUserName.value.includes("traveler")){
+  if (!formUserName.value.includes("traveler")) {
     event.preventDefault();
     toggleErrorMessage();
   }
 }
 
 const validatePassword = (event) => {
- if(!(formPassword.value === "travel")){
-   event.preventDefault();
-   toggleErrorMessage();
- }
+  if (!(formPassword.value === "travel")) {
+    event.preventDefault();
+    toggleErrorMessage();
+  }
 }
 
-const toggleErrorMessage = (event) => {
+const toggleErrorMessage = () => {
   let errorMessage = document.querySelector(".form-message-error");
   errorMessage.classList.remove("hidden");
 }

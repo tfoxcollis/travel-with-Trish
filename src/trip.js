@@ -31,7 +31,7 @@ class Trip {
 
   pastTrip(currentDate) {
     let today = new Date(currentDate);
-    if(today > this.endDate()) {
+    if (today > this.endDate()) {
       return true;
     }
     return false
@@ -39,7 +39,7 @@ class Trip {
 
   currentTrip(currentDate) {
     let today = new Date(currentDate);
-    if(today >= this.startDate() && today <= this.endDate()) {
+    if (today >= this.startDate() && today <= this.endDate()) {
       return true 
     }
     return false
@@ -47,7 +47,7 @@ class Trip {
 
   futureTrip(currentDate) {
     let today = new Date(currentDate);
-    if(today < this.startDate()) {
+    if (today < this.startDate()) {
       return true;
     }
     return false

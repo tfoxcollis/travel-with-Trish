@@ -1,6 +1,10 @@
 import { expect } from "chai";
 
-import { tripRepo, tripInstances, destinationInstances } from "./mockData/mock.js";
+import { 
+  tripRepo,
+  tripInstances,
+  destinationInstances
+} from "./mockData/mock.js";
 
 describe("trip", () => {
   let date;
@@ -29,27 +33,28 @@ describe("trip", () => {
           "status": "approved",
           "suggestedActivities": []
         }, {
-        "id": 4,
-        "userID": 43,
-        "destinationID": 14,
-        "destination": destinationInstances[3],
-        "travelers": 2,
-        "date": "2022/02/25",
-        "duration": 10,
-        "status": "approved",
-        "suggestedActivities": []
-      },{
-        "id": 5,
-        "userID": 42,
-        "destinationID": 29,
-        "destination": destinationInstances[4],
-        "travelers": 3,
-        "date": "2022/04/30",
-        "duration": 18,
-        "status": "approved",
-        "suggestedActivities": []
-    }];
-      expect(tripRepo.filterPastTrips(tripRepo.data, date)).to.deep.equal(pastTrips);
+          "id": 4,
+          "userID": 43,
+          "destinationID": 14,
+          "destination": destinationInstances[3],
+          "travelers": 2,
+          "date": "2022/02/25",
+          "duration": 10,
+          "status": "approved",
+          "suggestedActivities": []
+        }, {
+          "id": 5,
+          "userID": 42,
+          "destinationID": 29,
+          "destination": destinationInstances[4],
+          "travelers": 3,
+          "date": "2022/04/30",
+          "duration": 18,
+          "status": "approved",
+          "suggestedActivities": []
+        }];
+      expect(tripRepo.filterPastTrips(tripRepo.data, date))
+        .to.deep.equal(pastTrips);
     });
 
     it("Should filter future trips", () => {
@@ -75,7 +80,8 @@ describe("trip", () => {
           "status": "approved",
           "suggestedActivities": []
         }];
-      expect(tripRepo.filterFutureTrips(tripRepo.data, date)).to.deep.equal(futureTrips);
+      expect(tripRepo.filterFutureTrips(tripRepo.data, date))
+        .to.deep.equal(futureTrips);
     });
 
     it("Should get current trip", () => {
@@ -91,7 +97,8 @@ describe("trip", () => {
         "suggestedActivities": []
       };
 
-      expect(tripRepo.findCurrentTrip(tripRepo.data, date)).to.deep.equal(currentTrip);
+      expect(tripRepo.findCurrentTrip(tripRepo.data, date))
+        .to.deep.equal(currentTrip);
     });
 
     it("Should filter by id", () => {
@@ -119,7 +126,8 @@ describe("trip", () => {
         tripInstances[5]
       ];
 
-      expect(tripRepo.filterByYear(tripRepo.data, date)).to.deep.equal(yearFiltered);
+      expect(tripRepo.filterByYear(tripRepo.data, date))
+        .to.deep.equal(yearFiltered);
     });
 
     it("Should get paid trips", () => {
@@ -136,7 +144,8 @@ describe("trip", () => {
     it("Should get pending trips", () => {
       let pendingTrip = [tripInstances[0]];
 
-      expect(tripRepo.filterByStatus(tripRepo.data, "pending")).to.deep.equal(pendingTrip);
+      expect(tripRepo.filterByStatus(tripRepo.data, "pending"))
+        .to.deep.equal(pendingTrip);
     })
   })
 });

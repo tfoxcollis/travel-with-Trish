@@ -40,7 +40,6 @@ let trips;
 let travelerRepo;
 let tripRepo;
 let currentTraveler;
-let paidVacations;
 let potentialTrip;
 let todaysDate = getTodaysDate();
 
@@ -55,11 +54,10 @@ const fetchUserData = () => {
   ]).then((data) => {
     createDataArrays(data);
     travelerRepo = new TravelerRepo(travelers);
-    if(checkIfSignedIn()){
+    if (checkIfSignedIn()) {
       tripRepo = new TripRepo(trips);
-      paidVacations = tripRepo.getYearTotal(currentTraveler.id)
       setWelcomeDisplay();
-    };
+    }
   }).catch((error) =>
     alert(error)
   );
@@ -74,7 +72,9 @@ const createDataArrays = (data) => {
     return new Destination(destination);
   });
   trips = data[2].trips.map((trip) => {
-    let destination = destinations.find(destination => destination.id == trip.destinationID)
+    let destination = destinations.find((destination) => {
+      return destination.id === parseInt(trip.destinationID);
+    })
     return new Trip(trip, destination);
   });
 }
@@ -144,10 +144,11 @@ const setModalToggle = (trips) => {
         })
       })
       
-      document.querySelector(`#modalClose-${trip.id}`).addEventListener(e, (event) => {
-        event.preventDefault()
-        MicroModal.close(`modal-${trip.id}`)
-      })
+      document.querySelector(`#modalClose-${trip.id}`)
+        .addEventListener(e, (event) => {
+          event.preventDefault()
+          MicroModal.close(`modal-${trip.id}`)
+        })
     })
   })
 }
@@ -170,11 +171,12 @@ const getCurrentTrip = () => {
 
 const displayCurrentTrip = (currentTrip) => {
   tripContainer.innerHTML = ``
-  if(currentTrip){
+  if (currentTrip) {
     tripContainer.innerHTML = setTrip(currentTrip);
     setModalToggle([currentTrip]);
-  }else{
-    tripContainer.innerHTML = `<h2> Uh oh! You do not have a current trip!</h2> `
+  } else {
+    tripContainer.innerHTML =
+      `<h2> Uh oh! You do not have a current trip!</h2> `
   }
 };
 
@@ -185,7 +187,7 @@ const getFutureTrips = () => {
 
 const displayUpcomingTrips = (upcomingTrips) => {
   tripContainer.innerHTML = ``;
-  if(upcomingTrips.length == 0){
+  if (upcomingTrips.length === 0) {
     tripContainer.innerHTML = `
      <h2>You do not currently have any approved upcoming trips.<br>
      Check to see if any trip is pending.</h2>`
@@ -205,7 +207,7 @@ const getPastTrips = () => {
 const displayPastTrips = () => {
   let pastTrips = getPastTrips();
   tripContainer.innerHTML = ``;
-  if(pastTrips.length == 0){
+  if (pastTrips.length === 0) {
     tripContainer.innerHTML = `<h2>You do not currently have past trips.</h2>`
     return
   }
@@ -215,7 +217,7 @@ const displayPastTrips = () => {
   return setModalToggle(pastTrips);
 }
 
-const getPendingTrips = (pendingTrips) => {
+const getPendingTrips = () => {
   let tripByID = tripRepo.filterById(currentTraveler.id);
   return tripRepo.filterByStatus(tripByID, "pending");
 }
@@ -223,8 +225,9 @@ const getPendingTrips = (pendingTrips) => {
 const displayPendingTrips = () => {
   let pendingTrips = getPendingTrips();
   tripContainer.innerHTML = ``;
-  if(pendingTrips.length == 0){
-    tripContainer.innerHTML = `<h2>You do not currently have pending trips.</h2>`
+  if (pendingTrips.length === 0) {
+    tripContainer.innerHTML =
+      `<h2>You do not currently have pending trips.</h2>`
     return
   }
 
@@ -235,10 +238,10 @@ const displayPendingTrips = () => {
 };
 
 const toggleDisplay = (event) => {
-  if(event.target.id == "searchButton"){
+  if (event.target.id === "searchButton") {
     searchPage.classList.remove("hidden");
     tripContainer.classList.add("hidden");
-  }else{
+  } else {
     searchPage.classList.add("hidden");
     tripContainer.classList.remove("hidden");
   }
@@ -248,7 +251,7 @@ const toggleDisplay = (event) => {
 const getFormData = (event) => {
   let form = event.target.closest("form");
   let inputs = Array.from(form.querySelectorAll("input"));
-  inputs = inputs.filter(input => input.type != "submit");
+  inputs = inputs.filter(input => input.type !== "submit");
   inputs.push(form.querySelector("select"))
   return inputs.map((input) => {
     return {name: input.name, value: input.value}
@@ -257,19 +260,18 @@ const getFormData = (event) => {
 
 const checkforMissingValues = (formData) => {
   let missingValues = formData.filter((data) => {
-    if(!data.value) {
+    if (!data.value) {
       return true
     }
   })
-  if(missingValues.length > 0) {
+  if (missingValues.length > 0) {
     return true
   }
 }
 
 const createNewTrip = (formData, destination) => {
-  let id = tripRepo.data.length + 1
   let trip = {
-    id: id,
+    id: tripRepo.data.length + 1,
     userID: currentTraveler.id,
     destinationID: destination.id,
     travelers: parseInt(formData[2].value),
@@ -285,7 +287,7 @@ const postPotentialTrip = () => {
   Promise.all([
     postData("trips", potentialTrip)
   ])
-    .then((data) => {
+    .then(() => {
       fetchUserData();
     })
     .catch((error) =>
@@ -296,9 +298,9 @@ const postPotentialTrip = () => {
 const resetSearchPage = () => {
   let inputs = Array.from(userForm.querySelectorAll("input"));
   inputs.forEach((input) => {
-    if(input.id == "tripSubmit") {
+    if (input.id === "tripSubmit") {
       return;
-    } else if (input.type == "number") {
+    } else if (input.type === "number") {
       input.value = '0';
     } else {
       input.value = '';
@@ -330,15 +332,17 @@ const displaySelectedTripToBook = (formData, destination) => {
 
 const checkIfSignedIn = () => {
   let urlParams = new URLSearchParams(window.location.search);
-  let userID = urlParams.get('username')?.split('')?.splice(8,5)?.join('');
-  if(userID) {
-    let traveler = travelerRepo.data.find(traveler => traveler.id == userID)
-    if(traveler) {
+  let userID = urlParams.get('username').split('').splice(8, 5).join('');
+  if (userID) {
+    let traveler = travelerRepo.data.find((traveler) => {
+      return traveler.id === parseInt(userID)
+    })
+    if (traveler) {
       currentTraveler = traveler
     }
     return true
   }
-  if(!currentTraveler) {
+  if (!currentTraveler) {
     window.location.replace("http://localhost:8080/signin.html")
     return false
   }
@@ -376,12 +380,12 @@ pendingButton.addEventListener("click", (event) => {
 tripSubmit.addEventListener("click", (event) => {
   event.preventDefault();
   let formData = getFormData(event);
-  if(checkforMissingValues(formData)) {
+  if (checkforMissingValues(formData)) {
     alert("Please fill out all fields")
     return;
   }
   let destination = destinations.find((destination) => {
-    return destination.id == formData[3].value
+    return destination.id === parseInt(formData[3].value);
   })
   displaySelectedTripToBook(formData, destination);
 })

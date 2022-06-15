@@ -71,7 +71,7 @@ describe("Trip", () => {
       expect(trip1.startDate()).to.be.instanceof(Date);
     });
 
-    it("Should return a new Date instance that is x number of days later than startdate", () => {
+    it("Should return a date later than start date", () => {
       expect(trip1.endDate()).to.be.instanceof(Date);
       let endDate = new Date(trip1.date);
       endDate.setDate(trip1.startDate().getDate() + trip1.duration);

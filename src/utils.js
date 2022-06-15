@@ -1,8 +1,4 @@
 //utils
-
-import Destination from "./destination";
-import Trip from "./trip";
-
 const getTodaysDate = () => {
   let today = new Date();
   let dd = String(today.getDate()).padStart(2, '0');
@@ -20,6 +16,6 @@ const calculateTripCost = (trip) => {
 }
 
 export {
-         getTodaysDate,
-         calculateTripCost
-       };
+  getTodaysDate,
+  calculateTripCost
+};
