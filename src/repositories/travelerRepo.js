@@ -5,10 +5,16 @@ class TravelerRepo {
 
   // need for login
   findById(id) {
+    let traveler;
     if (id === undefined) {
       return "Oops it looks like no id was passed in";
     } else {
-      return this.data.find((traveler) => traveler.id === id);
+      traveler = this.data.find((traveler) => traveler.id === id);
+    }
+    if(traveler) {
+      return traveler;
+    } else {
+      return "Traveler not found";
     }
   }
 
