@@ -59,7 +59,7 @@ const fetchUserData = () => {
       setWelcomeDisplay();
     }
   }).catch((error) =>
-    alert(error)
+    console.log(error)
   );
 };
 

@@ -1,8 +1,6 @@
 //apiCalls
 const getData = (apiName) => {
-  return fetch(`https://travel-tracker-api-one.vercel.app/api/v1/${apiName}`, {
-    mode: "cors"
-  }).then(
+  return fetch(`https://travel-tracker-api-one.vercel.app/api/v1/${apiName}`).then(
     (response) => response.json()
   );
 };
