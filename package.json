@@ -3,7 +3,6 @@
   "version": "2.0.0",
   "description": "Project starter kit using webpack, mocha, chai, and SCSS/SASS enabled",
   "main": "src/index.js",
-  "proxy": "travel-tracker-api-one.vercel.app",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/turingschool-examples/webpack-starter-kit.git"
