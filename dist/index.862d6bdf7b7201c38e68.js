@@ -18,7 +18,7 @@ const getData = (apiName) => {
 };
 
 const postData = (apiName, formData) => {
-  let url = `https://travel-tracker-api-one.vercel.app//api/v1/${apiName}`
+  let url = `https://travel-tracker-api-one.vercel.app/api/v1/${apiName}`
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(formData),
