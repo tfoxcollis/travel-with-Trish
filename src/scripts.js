@@ -107,7 +107,7 @@ const addOptionsToDestinationsDropdown = () => {
 const watchForSignout = () => {
   let signoutButton = document.querySelector("#signOut");
   signoutButton.addEventListener("click", () => {
-    window.location.href = "http://localhost:8080/signin.html";
+    window.location.href = "https://travel-with-trish.vercel.app/signin.html";
   });
 }
 
@@ -355,7 +355,7 @@ const checkIfSignedIn = () => {
     return true
   }
   if (!currentTraveler) {
-    window.location.replace("http://localhost:8080/signin.html")
+    window.location.replace("https://travel-with-trish.vercel.app/signin.html/signin.html")
     return false
   }
 }
