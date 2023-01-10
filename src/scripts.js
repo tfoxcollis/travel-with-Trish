@@ -355,7 +355,7 @@ const checkIfSignedIn = () => {
     return true
   }
   if (!currentTraveler) {
-    window.location.replace("https://travel-with-trish.vercel.app/signin.html/signin.html")
+    window.location.replace("https://travel-with-trish.vercel.app/signin.html")
     return false
   }
 }
